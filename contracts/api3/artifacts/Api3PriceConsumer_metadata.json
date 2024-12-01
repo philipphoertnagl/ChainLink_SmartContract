@@ -100,6 +100,30 @@
 				"type": "function"
 			},
 			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "proxy",
+						"type": "address"
+					}
+				],
+				"name": "readDataFeed",
+				"outputs": [
+					{
+						"internalType": "int256",
+						"name": "value",
+						"type": "int256"
+					},
+					{
+						"internalType": "uint32",
+						"name": "timestamp",
+						"type": "uint32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"inputs": [],
 				"name": "requestPrice",
 				"outputs": [],
@@ -184,11 +208,11 @@
 	},
 	"sources": {
 		"contracts/api3/PriceConsumer.sol": {
-			"keccak256": "0xf7425706fb63bb3593cf086417d8a4e76dfcfc714f50f87a3be5f24f8c39dd92",
+			"keccak256": "0x824f5c6b753405a72bc497f973c848bb9cc1a59b96ab79079a2ac5b45616a71e",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://ff9a231028ec94533545eff0817c41cb3cb97ca8ca6a497efb813995ec636a7b",
-				"dweb:/ipfs/QmSg9rsMqozR8Gii4THXfXcGNx7epQoFjxpyn9PUSLi6sR"
+				"bzz-raw://514a15ddcbf5bfe51e5f8e28616c38717574323443badbc46f1b3a2dd4782d20",
+				"dweb:/ipfs/QmTkwRvtLu1MSBNXccxo9jtYVSzoV1mJ51TFKuL5ijXycR"
 			]
 		}
 	},

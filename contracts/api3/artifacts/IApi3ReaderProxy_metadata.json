@@ -1,0 +1,64 @@
+{
+	"compiler": {
+		"version": "0.8.20+commit.a1b79de6"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"name": "read",
+				"outputs": [
+					{
+						"internalType": "int224",
+						"name": "value",
+						"type": "int224"
+					},
+					{
+						"internalType": "uint32",
+						"name": "timestamp",
+						"type": "uint32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/api3/PriceConsumer.sol": "IApi3ReaderProxy"
+		},
+		"evmVersion": "shanghai",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/api3/PriceConsumer.sol": {
+			"keccak256": "0x824f5c6b753405a72bc497f973c848bb9cc1a59b96ab79079a2ac5b45616a71e",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://514a15ddcbf5bfe51e5f8e28616c38717574323443badbc46f1b3a2dd4782d20",
+				"dweb:/ipfs/QmTkwRvtLu1MSBNXccxo9jtYVSzoV1mJ51TFKuL5ijXycR"
+			]
+		}
+	},
+	"version": 1
+}

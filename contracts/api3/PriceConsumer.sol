@@ -1,6 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
+// Interface for the API3ReaderProxy contract
+interface IApi3ReaderProxy {
+    function read() external view returns (int224 value, uint32 timestamp);
+}
+
+
 contract Api3PriceConsumer {
     address public airnode; // Airnode address
     bytes32 public endpointId; // Endpoint ID for the API
@@ -52,4 +58,18 @@ contract Api3PriceConsumer {
     function fulfill(bytes32, bytes calldata data) external onlyAirnodeRrp {
         latestPrice = abi.decode(data, (int256));
     }
+
+      // Function to read price from the proxy (Direct read method)
+    function readDataFeed(address proxy)
+        external
+        view
+        returns (int256 value, uint32 timestamp)
+    {
+        (int224 rawValue, uint32 rawTimestamp) = IApi3ReaderProxy(proxy).read();
+        value = int256(rawValue); // Convert value to int256 for consistency
+        timestamp = rawTimestamp;
+        return (value, timestamp);
+    }
 }
+
+
