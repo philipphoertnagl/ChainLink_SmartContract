@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.20;
 
-import "@api3/airnode-protocol/contracts/AirnodeRrpV0.sol";
+import "./rrp/AirnodeRrpV0.sol";
 
 contract Api3PriceConsumer is AirnodeRrpV0 {
     address public airnode; // Airnode address
