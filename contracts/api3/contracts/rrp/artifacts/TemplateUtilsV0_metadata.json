@@ -1,0 +1,206 @@
+{
+	"compiler": {
+		"version": "0.8.28+commit.7893614a"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "bytes32",
+						"name": "templateId",
+						"type": "bytes32"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "airnode",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "bytes32",
+						"name": "endpointId",
+						"type": "bytes32"
+					},
+					{
+						"indexed": false,
+						"internalType": "bytes",
+						"name": "parameters",
+						"type": "bytes"
+					}
+				],
+				"name": "CreatedTemplate",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "airnode",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "endpointId",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "bytes",
+						"name": "parameters",
+						"type": "bytes"
+					}
+				],
+				"name": "createTemplate",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "templateId",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32[]",
+						"name": "templateIds",
+						"type": "bytes32[]"
+					}
+				],
+				"name": "getTemplates",
+				"outputs": [
+					{
+						"internalType": "address[]",
+						"name": "airnodes",
+						"type": "address[]"
+					},
+					{
+						"internalType": "bytes32[]",
+						"name": "endpointIds",
+						"type": "bytes32[]"
+					},
+					{
+						"internalType": "bytes[]",
+						"name": "parameters",
+						"type": "bytes[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"name": "templates",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "airnode",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "endpointId",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "bytes",
+						"name": "parameters",
+						"type": "bytes"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {
+				"createTemplate(address,bytes32,bytes)": {
+					"details": "A specific set of request parameters will always have the same template ID. This means a few things: (1) You can compute the expected ID of a template before creating it, (2) Creating a new template with the same parameters will overwrite the old one and return the same ID, (3) After you query a template with its ID, you can verify its integrity by applying the hash and comparing the result with the ID.",
+					"params": {
+						"airnode": "Airnode address",
+						"endpointId": "Endpoint ID (allowed to be `bytes32(0)`)",
+						"parameters": "Static request parameters (i.e., parameters that will not change between requests, unlike the dynamic parameters determined at request-time)"
+					},
+					"returns": {
+						"templateId": "Request template ID"
+					}
+				},
+				"getTemplates(bytes32[])": {
+					"details": "Does not revert if the templates being indexed do not exist",
+					"params": {
+						"templateIds": "Request template IDs"
+					},
+					"returns": {
+						"airnodes": "Array of Airnode addresses",
+						"endpointIds": "Array of endpoint IDs",
+						"parameters": "Array of request parameters"
+					}
+				}
+			},
+			"title": "Contract that implements request templates",
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {
+				"createTemplate(address,bytes32,bytes)": {
+					"notice": "Creates a request template with the given parameters, addressable by the ID it returns"
+				},
+				"getTemplates(bytes32[])": {
+					"notice": "A convenience method to retrieve multiple templates with a single call"
+				},
+				"templates(bytes32)": {
+					"notice": "Called to get a template"
+				}
+			},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/api3/contracts/rrp/TemplateUtilsV0.sol": "TemplateUtilsV0"
+		},
+		"evmVersion": "cancun",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/api3/contracts/rrp/TemplateUtilsV0.sol": {
+			"keccak256": "0x86143cd6a4197c87b79fd9a195deb4eacee60348e47d76a680d58cea72217614",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://79bdc0ccfed7cb2e98871d8549070f84b73c5d3bcb2bb881740593d5cc10c7f3",
+				"dweb:/ipfs/QmcfgC83sP2YfXX1VotLS7ZKKA2kriauPCJSF6QfKY1X85"
+			]
+		},
+		"contracts/api3/contracts/rrp/interfaces/ITemplateUtilsV0.sol": {
+			"keccak256": "0x4212b264303a78b3c3ed0230cf23b7c3ca58bccec936eccd1d4924347b0fea47",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://eaf9f61c252264854cbdc409692f99d00327ad7ca9cd4bc17f3b0164e4bc8d76",
+				"dweb:/ipfs/QmYWvPeNGjND5kYPTMhU6RJRwgkHWqvYYoN24Lnbjndj8d"
+			]
+		}
+	},
+	"version": 1
+}

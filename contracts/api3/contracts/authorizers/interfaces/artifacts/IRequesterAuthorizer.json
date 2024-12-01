@@ -1,0 +1,472 @@
+{
+	"deploy": {
+		"VM:-": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"main:1": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"ropsten:3": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"rinkeby:4": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"kovan:42": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"goerli:5": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"Custom": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		}
+	},
+	"data": {
+		"bytecode": {
+			"functionDebugData": {},
+			"generatedSources": [],
+			"linkReferences": {},
+			"object": "",
+			"opcodes": "",
+			"sourceMap": ""
+		},
+		"deployedBytecode": {
+			"functionDebugData": {},
+			"generatedSources": [],
+			"immutableReferences": {},
+			"linkReferences": {},
+			"object": "",
+			"opcodes": "",
+			"sourceMap": ""
+		},
+		"gasEstimates": null,
+		"methodIdentifiers": {
+			"airnodeToEndpointIdToRequesterToSetterToIndefiniteWhitelistStatus(address,bytes32,address,address)": "216de27e",
+			"airnodeToEndpointIdToRequesterToWhitelistStatus(address,bytes32,address)": "82d229e3",
+			"extendWhitelistExpiration(address,bytes32,address,uint64)": "73c0627e",
+			"isAuthorized(address,bytes32,address)": "f57a044a",
+			"isAuthorizedV0(bytes32,address,bytes32,address,address)": "29b915b3",
+			"revokeIndefiniteWhitelistStatus(address,bytes32,address,address)": "7e766bc1",
+			"setIndefiniteWhitelistStatus(address,bytes32,address,bool)": "43b64962",
+			"setWhitelistExpiration(address,bytes32,address,uint64)": "4751c2e2"
+		}
+	},
+	"abi": [
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": true,
+					"internalType": "address",
+					"name": "airnode",
+					"type": "address"
+				},
+				{
+					"indexed": false,
+					"internalType": "bytes32",
+					"name": "endpointId",
+					"type": "bytes32"
+				},
+				{
+					"indexed": true,
+					"internalType": "address",
+					"name": "requester",
+					"type": "address"
+				},
+				{
+					"indexed": true,
+					"internalType": "address",
+					"name": "sender",
+					"type": "address"
+				},
+				{
+					"indexed": false,
+					"internalType": "uint256",
+					"name": "expiration",
+					"type": "uint256"
+				}
+			],
+			"name": "ExtendedWhitelistExpiration",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": true,
+					"internalType": "address",
+					"name": "airnode",
+					"type": "address"
+				},
+				{
+					"indexed": false,
+					"internalType": "bytes32",
+					"name": "endpointId",
+					"type": "bytes32"
+				},
+				{
+					"indexed": true,
+					"internalType": "address",
+					"name": "requester",
+					"type": "address"
+				},
+				{
+					"indexed": true,
+					"internalType": "address",
+					"name": "setter",
+					"type": "address"
+				},
+				{
+					"indexed": false,
+					"internalType": "address",
+					"name": "sender",
+					"type": "address"
+				},
+				{
+					"indexed": false,
+					"internalType": "uint192",
+					"name": "indefiniteWhitelistCount",
+					"type": "uint192"
+				}
+			],
+			"name": "RevokedIndefiniteWhitelistStatus",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": true,
+					"internalType": "address",
+					"name": "airnode",
+					"type": "address"
+				},
+				{
+					"indexed": false,
+					"internalType": "bytes32",
+					"name": "endpointId",
+					"type": "bytes32"
+				},
+				{
+					"indexed": true,
+					"internalType": "address",
+					"name": "requester",
+					"type": "address"
+				},
+				{
+					"indexed": true,
+					"internalType": "address",
+					"name": "sender",
+					"type": "address"
+				},
+				{
+					"indexed": false,
+					"internalType": "bool",
+					"name": "status",
+					"type": "bool"
+				},
+				{
+					"indexed": false,
+					"internalType": "uint192",
+					"name": "indefiniteWhitelistCount",
+					"type": "uint192"
+				}
+			],
+			"name": "SetIndefiniteWhitelistStatus",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": true,
+					"internalType": "address",
+					"name": "airnode",
+					"type": "address"
+				},
+				{
+					"indexed": false,
+					"internalType": "bytes32",
+					"name": "endpointId",
+					"type": "bytes32"
+				},
+				{
+					"indexed": true,
+					"internalType": "address",
+					"name": "requester",
+					"type": "address"
+				},
+				{
+					"indexed": true,
+					"internalType": "address",
+					"name": "sender",
+					"type": "address"
+				},
+				{
+					"indexed": false,
+					"internalType": "uint256",
+					"name": "expiration",
+					"type": "uint256"
+				}
+			],
+			"name": "SetWhitelistExpiration",
+			"type": "event"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "airnode",
+					"type": "address"
+				},
+				{
+					"internalType": "bytes32",
+					"name": "endpointId",
+					"type": "bytes32"
+				},
+				{
+					"internalType": "address",
+					"name": "requester",
+					"type": "address"
+				},
+				{
+					"internalType": "address",
+					"name": "setter",
+					"type": "address"
+				}
+			],
+			"name": "airnodeToEndpointIdToRequesterToSetterToIndefiniteWhitelistStatus",
+			"outputs": [
+				{
+					"internalType": "bool",
+					"name": "indefiniteWhitelistStatus",
+					"type": "bool"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "airnode",
+					"type": "address"
+				},
+				{
+					"internalType": "bytes32",
+					"name": "endpointId",
+					"type": "bytes32"
+				},
+				{
+					"internalType": "address",
+					"name": "requester",
+					"type": "address"
+				}
+			],
+			"name": "airnodeToEndpointIdToRequesterToWhitelistStatus",
+			"outputs": [
+				{
+					"internalType": "uint64",
+					"name": "expirationTimestamp",
+					"type": "uint64"
+				},
+				{
+					"internalType": "uint192",
+					"name": "indefiniteWhitelistCount",
+					"type": "uint192"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "airnode",
+					"type": "address"
+				},
+				{
+					"internalType": "bytes32",
+					"name": "endpointId",
+					"type": "bytes32"
+				},
+				{
+					"internalType": "address",
+					"name": "requester",
+					"type": "address"
+				},
+				{
+					"internalType": "uint64",
+					"name": "expirationTimestamp",
+					"type": "uint64"
+				}
+			],
+			"name": "extendWhitelistExpiration",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "airnode",
+					"type": "address"
+				},
+				{
+					"internalType": "bytes32",
+					"name": "endpointId",
+					"type": "bytes32"
+				},
+				{
+					"internalType": "address",
+					"name": "requester",
+					"type": "address"
+				}
+			],
+			"name": "isAuthorized",
+			"outputs": [
+				{
+					"internalType": "bool",
+					"name": "",
+					"type": "bool"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "bytes32",
+					"name": "requestId",
+					"type": "bytes32"
+				},
+				{
+					"internalType": "address",
+					"name": "airnode",
+					"type": "address"
+				},
+				{
+					"internalType": "bytes32",
+					"name": "endpointId",
+					"type": "bytes32"
+				},
+				{
+					"internalType": "address",
+					"name": "sponsor",
+					"type": "address"
+				},
+				{
+					"internalType": "address",
+					"name": "requester",
+					"type": "address"
+				}
+			],
+			"name": "isAuthorizedV0",
+			"outputs": [
+				{
+					"internalType": "bool",
+					"name": "",
+					"type": "bool"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "airnode",
+					"type": "address"
+				},
+				{
+					"internalType": "bytes32",
+					"name": "endpointId",
+					"type": "bytes32"
+				},
+				{
+					"internalType": "address",
+					"name": "requester",
+					"type": "address"
+				},
+				{
+					"internalType": "address",
+					"name": "setter",
+					"type": "address"
+				}
+			],
+			"name": "revokeIndefiniteWhitelistStatus",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "airnode",
+					"type": "address"
+				},
+				{
+					"internalType": "bytes32",
+					"name": "endpointId",
+					"type": "bytes32"
+				},
+				{
+					"internalType": "address",
+					"name": "requester",
+					"type": "address"
+				},
+				{
+					"internalType": "bool",
+					"name": "status",
+					"type": "bool"
+				}
+			],
+			"name": "setIndefiniteWhitelistStatus",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "airnode",
+					"type": "address"
+				},
+				{
+					"internalType": "bytes32",
+					"name": "endpointId",
+					"type": "bytes32"
+				},
+				{
+					"internalType": "address",
+					"name": "requester",
+					"type": "address"
+				},
+				{
+					"internalType": "uint64",
+					"name": "expirationTimestamp",
+					"type": "uint64"
+				}
+			],
+			"name": "setWhitelistExpiration",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		}
+	]
+}

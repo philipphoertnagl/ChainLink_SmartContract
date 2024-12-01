@@ -1,0 +1,4839 @@
+{
+	"id": "2da28b200b93352ccc22b055fe0b89c0",
+	"_format": "hh-sol-build-info-1",
+	"solcVersion": "0.8.28",
+	"solcLongVersion": "0.8.28+commit.7893614a",
+	"input": {
+		"language": "Solidity",
+		"sources": {
+			"contracts/api3/contracts/authorizers/interfaces/IRequesterAuthorizerWithManager.sol": {
+				"content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.20;\n\nimport \"../../whitelist/interfaces/IWhitelistRolesWithManager.sol\";\nimport \"./IRequesterAuthorizer.sol\";\n\ninterface IRequesterAuthorizerWithManager is\n    IWhitelistRolesWithManager,\n    IRequesterAuthorizer\n{}\n"
+			},
+			"contracts/api3/contracts/authorizers/interfaces/IRequesterAuthorizer.sol": {
+				"content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.20;\n\nimport \"./IAuthorizerV0.sol\";\n\ninterface IRequesterAuthorizer is IAuthorizerV0 {\n    event ExtendedWhitelistExpiration(\n        address indexed airnode,\n        bytes32 endpointId,\n        address indexed requester,\n        address indexed sender,\n        uint256 expiration\n    );\n\n    event SetWhitelistExpiration(\n        address indexed airnode,\n        bytes32 endpointId,\n        address indexed requester,\n        address indexed sender,\n        uint256 expiration\n    );\n\n    event SetIndefiniteWhitelistStatus(\n        address indexed airnode,\n        bytes32 endpointId,\n        address indexed requester,\n        address indexed sender,\n        bool status,\n        uint192 indefiniteWhitelistCount\n    );\n\n    event RevokedIndefiniteWhitelistStatus(\n        address indexed airnode,\n        bytes32 endpointId,\n        address indexed requester,\n        address indexed setter,\n        address sender,\n        uint192 indefiniteWhitelistCount\n    );\n\n    function extendWhitelistExpiration(\n        address airnode,\n        bytes32 endpointId,\n        address requester,\n        uint64 expirationTimestamp\n    ) external;\n\n    function setWhitelistExpiration(\n        address airnode,\n        bytes32 endpointId,\n        address requester,\n        uint64 expirationTimestamp\n    ) external;\n\n    function setIndefiniteWhitelistStatus(\n        address airnode,\n        bytes32 endpointId,\n        address requester,\n        bool status\n    ) external;\n\n    function revokeIndefiniteWhitelistStatus(\n        address airnode,\n        bytes32 endpointId,\n        address requester,\n        address setter\n    ) external;\n\n    function airnodeToEndpointIdToRequesterToWhitelistStatus(\n        address airnode,\n        bytes32 endpointId,\n        address requester\n    )\n        external\n        view\n        returns (uint64 expirationTimestamp, uint192 indefiniteWhitelistCount);\n\n    function airnodeToEndpointIdToRequesterToSetterToIndefiniteWhitelistStatus(\n        address airnode,\n        bytes32 endpointId,\n        address requester,\n        address setter\n    ) external view returns (bool indefiniteWhitelistStatus);\n\n    function isAuthorized(\n        address airnode,\n        bytes32 endpointId,\n        address requester\n    ) external view returns (bool);\n}\n"
+			},
+			"contracts/api3/contracts/whitelist/interfaces/IWhitelistRolesWithManager.sol": {
+				"content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.0;\n\nimport \"./IWhitelistRoles.sol\";\nimport \"../../access-control-registry/interfaces/IAccessControlRegistryAdminnedWithManager.sol\";\n\ninterface IWhitelistRolesWithManager is\n    IWhitelistRoles,\n    IAccessControlRegistryAdminnedWithManager\n{\n    function whitelistExpirationExtenderRole() external view returns (bytes32);\n\n    function whitelistExpirationSetterRole() external view returns (bytes32);\n\n    function indefiniteWhitelisterRole() external view returns (bytes32);\n}\n"
+			},
+			"contracts/api3/contracts/access-control-registry/interfaces/IAccessControlRegistryAdminnedWithManager.sol": {
+				"content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.0;\n\nimport \"./IAccessControlRegistryAdminned.sol\";\n\ninterface IAccessControlRegistryAdminnedWithManager is\n    IAccessControlRegistryAdminned\n{\n    function manager() external view returns (address);\n\n    function adminRole() external view returns (bytes32);\n}\n"
+			},
+			"contracts/api3/contracts/whitelist/interfaces/IWhitelistRoles.sol": {
+				"content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.0;\n\ninterface IWhitelistRoles {\n    // solhint-disable-next-line func-name-mixedcase\n    function WHITELIST_EXPIRATION_EXTENDER_ROLE_DESCRIPTION()\n        external\n        view\n        returns (string memory);\n\n    // solhint-disable-next-line func-name-mixedcase\n    function WHITELIST_EXPIRATION_SETTER_ROLE_DESCRIPTION()\n        external\n        view\n        returns (string memory);\n\n    // solhint-disable-next-line func-name-mixedcase\n    function INDEFINITE_WHITELISTER_ROLE_DESCRIPTION()\n        external\n        view\n        returns (string memory);\n}\n"
+			},
+			"contracts/api3/contracts/authorizers/interfaces/IAuthorizerV0.sol": {
+				"content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.20;\n\ninterface IAuthorizerV0 {\n    function isAuthorizedV0(\n        bytes32 requestId,\n        address airnode,\n        bytes32 endpointId,\n        address sponsor,\n        address requester\n    ) external view returns (bool);\n}\n"
+			},
+			"contracts/api3/contracts/access-control-registry/interfaces/IAccessControlRegistryAdminned.sol": {
+				"content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.0;\n\nimport \"./IAccessControlRegistryUser.sol\";\n\ninterface IAccessControlRegistryAdminned is IAccessControlRegistryUser {\n    function adminRoleDescription() external view returns (string memory);\n}\n"
+			},
+			"contracts/api3/contracts/access-control-registry/interfaces/IAccessControlRegistryUser.sol": {
+				"content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.0;\n\ninterface IAccessControlRegistryUser {\n    function accessControlRegistry() external view returns (address);\n}\n"
+			}
+		},
+		"settings": {
+			"optimizer": {
+				"enabled": false,
+				"runs": 200
+			},
+			"outputSelection": {
+				"*": {
+					"": [
+						"ast"
+					],
+					"*": [
+						"abi",
+						"metadata",
+						"devdoc",
+						"userdoc",
+						"storageLayout",
+						"evm.legacyAssembly",
+						"evm.bytecode",
+						"evm.deployedBytecode",
+						"evm.methodIdentifiers",
+						"evm.gasEstimates",
+						"evm.assembly"
+					]
+				}
+			},
+			"remappings": []
+		}
+	},
+	"output": {
+		"contracts": {
+			"contracts/api3/contracts/access-control-registry/interfaces/IAccessControlRegistryAdminned.sol": {
+				"IAccessControlRegistryAdminned": {
+					"abi": [
+						{
+							"inputs": [],
+							"name": "accessControlRegistry",
+							"outputs": [
+								{
+									"internalType": "address",
+									"name": "",
+									"type": "address"
+								}
+							],
+							"stateMutability": "view",
+							"type": "function"
+						},
+						{
+							"inputs": [],
+							"name": "adminRoleDescription",
+							"outputs": [
+								{
+									"internalType": "string",
+									"name": "",
+									"type": "string"
+								}
+							],
+							"stateMutability": "view",
+							"type": "function"
+						}
+					],
+					"devdoc": {
+						"kind": "dev",
+						"methods": {},
+						"version": 1
+					},
+					"evm": {
+						"assembly": "",
+						"bytecode": {
+							"functionDebugData": {},
+							"generatedSources": [],
+							"linkReferences": {},
+							"object": "",
+							"opcodes": "",
+							"sourceMap": ""
+						},
+						"deployedBytecode": {
+							"functionDebugData": {},
+							"generatedSources": [],
+							"immutableReferences": {},
+							"linkReferences": {},
+							"object": "",
+							"opcodes": "",
+							"sourceMap": ""
+						},
+						"gasEstimates": null,
+						"legacyAssembly": null,
+						"methodIdentifiers": {
+							"accessControlRegistry()": "1ce9ae07",
+							"adminRoleDescription()": "4c8f1d8d"
+						}
+					},
+					"metadata": "{\"compiler\":{\"version\":\"0.8.28+commit.7893614a\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"accessControlRegistry\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"adminRoleDescription\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/api3/contracts/access-control-registry/interfaces/IAccessControlRegistryAdminned.sol\":\"IAccessControlRegistryAdminned\"},\"evmVersion\":\"cancun\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"contracts/api3/contracts/access-control-registry/interfaces/IAccessControlRegistryAdminned.sol\":{\"keccak256\":\"0x0f3ad45d6e1a4815cfaff171926ad5352d499a431b041b11adb316f4569bcce4\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://e42cc3177cb7af316d8bc8bf9d35a23c76561cc00ad15d8d2a79a27565c2f78e\",\"dweb:/ipfs/QmUfTP9ZkKYmJYro5fJujV1YdLvcZAhgwRMsiXPV91EnYG\"]},\"contracts/api3/contracts/access-control-registry/interfaces/IAccessControlRegistryUser.sol\":{\"keccak256\":\"0xce1ceb04823a801ea173fe5140344645295768ff1b4d2ee2969c2f4b362102ca\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://506b04499e6b82dcc3287f7c1af874efda1a5b40b118bd0983fba25a219bc741\",\"dweb:/ipfs/QmQd74L793o79P9gWhyJryRgNXuzcdjvgWFeamAHC83chY\"]}},\"version\":1}",
+					"storageLayout": {
+						"storage": [],
+						"types": null
+					},
+					"userdoc": {
+						"kind": "user",
+						"methods": {},
+						"version": 1
+					}
+				}
+			},
+			"contracts/api3/contracts/access-control-registry/interfaces/IAccessControlRegistryAdminnedWithManager.sol": {
+				"IAccessControlRegistryAdminnedWithManager": {
+					"abi": [
+						{
+							"inputs": [],
+							"name": "accessControlRegistry",
+							"outputs": [
+								{
+									"internalType": "address",
+									"name": "",
+									"type": "address"
+								}
+							],
+							"stateMutability": "view",
+							"type": "function"
+						},
+						{
+							"inputs": [],
+							"name": "adminRole",
+							"outputs": [
+								{
+									"internalType": "bytes32",
+									"name": "",
+									"type": "bytes32"
+								}
+							],
+							"stateMutability": "view",
+							"type": "function"
+						},
+						{
+							"inputs": [],
+							"name": "adminRoleDescription",
+							"outputs": [
+								{
+									"internalType": "string",
+									"name": "",
+									"type": "string"
+								}
+							],
+							"stateMutability": "view",
+							"type": "function"
+						},
+						{
+							"inputs": [],
+							"name": "manager",
+							"outputs": [
+								{
+									"internalType": "address",
+									"name": "",
+									"type": "address"
+								}
+							],
+							"stateMutability": "view",
+							"type": "function"
+						}
+					],
+					"devdoc": {
+						"kind": "dev",
+						"methods": {},
+						"version": 1
+					},
+					"evm": {
+						"assembly": "",
+						"bytecode": {
+							"functionDebugData": {},
+							"generatedSources": [],
+							"linkReferences": {},
+							"object": "",
+							"opcodes": "",
+							"sourceMap": ""
+						},
+						"deployedBytecode": {
+							"functionDebugData": {},
+							"generatedSources": [],
+							"immutableReferences": {},
+							"linkReferences": {},
+							"object": "",
+							"opcodes": "",
+							"sourceMap": ""
+						},
+						"gasEstimates": null,
+						"legacyAssembly": null,
+						"methodIdentifiers": {
+							"accessControlRegistry()": "1ce9ae07",
+							"adminRole()": "009f2f3c",
+							"adminRoleDescription()": "4c8f1d8d",
+							"manager()": "481c6a75"
+						}
+					},
+					"metadata": "{\"compiler\":{\"version\":\"0.8.28+commit.7893614a\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"accessControlRegistry\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"adminRole\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"adminRoleDescription\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"manager\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/api3/contracts/access-control-registry/interfaces/IAccessControlRegistryAdminnedWithManager.sol\":\"IAccessControlRegistryAdminnedWithManager\"},\"evmVersion\":\"cancun\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"contracts/api3/contracts/access-control-registry/interfaces/IAccessControlRegistryAdminned.sol\":{\"keccak256\":\"0x0f3ad45d6e1a4815cfaff171926ad5352d499a431b041b11adb316f4569bcce4\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://e42cc3177cb7af316d8bc8bf9d35a23c76561cc00ad15d8d2a79a27565c2f78e\",\"dweb:/ipfs/QmUfTP9ZkKYmJYro5fJujV1YdLvcZAhgwRMsiXPV91EnYG\"]},\"contracts/api3/contracts/access-control-registry/interfaces/IAccessControlRegistryAdminnedWithManager.sol\":{\"keccak256\":\"0x8a8e1756fca81175305755b7a311536132e88173f60b2ac0fdeef92a6236afc5\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://154fe905383d7d4b47568ffbc900c5cba6e2d58b2a7baef036e8ce47f0cd7048\",\"dweb:/ipfs/QmP9ovc77zXYX62SA27nj1QeG97yb6nDid8aRrsc7Mts6E\"]},\"contracts/api3/contracts/access-control-registry/interfaces/IAccessControlRegistryUser.sol\":{\"keccak256\":\"0xce1ceb04823a801ea173fe5140344645295768ff1b4d2ee2969c2f4b362102ca\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://506b04499e6b82dcc3287f7c1af874efda1a5b40b118bd0983fba25a219bc741\",\"dweb:/ipfs/QmQd74L793o79P9gWhyJryRgNXuzcdjvgWFeamAHC83chY\"]}},\"version\":1}",
+					"storageLayout": {
+						"storage": [],
+						"types": null
+					},
+					"userdoc": {
+						"kind": "user",
+						"methods": {},
+						"version": 1
+					}
+				}
+			},
+			"contracts/api3/contracts/access-control-registry/interfaces/IAccessControlRegistryUser.sol": {
+				"IAccessControlRegistryUser": {
+					"abi": [
+						{
+							"inputs": [],
+							"name": "accessControlRegistry",
+							"outputs": [
+								{
+									"internalType": "address",
+									"name": "",
+									"type": "address"
+								}
+							],
+							"stateMutability": "view",
+							"type": "function"
+						}
+					],
+					"devdoc": {
+						"kind": "dev",
+						"methods": {},
+						"version": 1
+					},
+					"evm": {
+						"assembly": "",
+						"bytecode": {
+							"functionDebugData": {},
+							"generatedSources": [],
+							"linkReferences": {},
+							"object": "",
+							"opcodes": "",
+							"sourceMap": ""
+						},
+						"deployedBytecode": {
+							"functionDebugData": {},
+							"generatedSources": [],
+							"immutableReferences": {},
+							"linkReferences": {},
+							"object": "",
+							"opcodes": "",
+							"sourceMap": ""
+						},
+						"gasEstimates": null,
+						"legacyAssembly": null,
+						"methodIdentifiers": {
+							"accessControlRegistry()": "1ce9ae07"
+						}
+					},
+					"metadata": "{\"compiler\":{\"version\":\"0.8.28+commit.7893614a\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"accessControlRegistry\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/api3/contracts/access-control-registry/interfaces/IAccessControlRegistryUser.sol\":\"IAccessControlRegistryUser\"},\"evmVersion\":\"cancun\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"contracts/api3/contracts/access-control-registry/interfaces/IAccessControlRegistryUser.sol\":{\"keccak256\":\"0xce1ceb04823a801ea173fe5140344645295768ff1b4d2ee2969c2f4b362102ca\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://506b04499e6b82dcc3287f7c1af874efda1a5b40b118bd0983fba25a219bc741\",\"dweb:/ipfs/QmQd74L793o79P9gWhyJryRgNXuzcdjvgWFeamAHC83chY\"]}},\"version\":1}",
+					"storageLayout": {
+						"storage": [],
+						"types": null
+					},
+					"userdoc": {
+						"kind": "user",
+						"methods": {},
+						"version": 1
+					}
+				}
+			},
+			"contracts/api3/contracts/authorizers/interfaces/IAuthorizerV0.sol": {
+				"IAuthorizerV0": {
+					"abi": [
+						{
+							"inputs": [
+								{
+									"internalType": "bytes32",
+									"name": "requestId",
+									"type": "bytes32"
+								},
+								{
+									"internalType": "address",
+									"name": "airnode",
+									"type": "address"
+								},
+								{
+									"internalType": "bytes32",
+									"name": "endpointId",
+									"type": "bytes32"
+								},
+								{
+									"internalType": "address",
+									"name": "sponsor",
+									"type": "address"
+								},
+								{
+									"internalType": "address",
+									"name": "requester",
+									"type": "address"
+								}
+							],
+							"name": "isAuthorizedV0",
+							"outputs": [
+								{
+									"internalType": "bool",
+									"name": "",
+									"type": "bool"
+								}
+							],
+							"stateMutability": "view",
+							"type": "function"
+						}
+					],
+					"devdoc": {
+						"kind": "dev",
+						"methods": {},
+						"version": 1
+					},
+					"evm": {
+						"assembly": "",
+						"bytecode": {
+							"functionDebugData": {},
+							"generatedSources": [],
+							"linkReferences": {},
+							"object": "",
+							"opcodes": "",
+							"sourceMap": ""
+						},
+						"deployedBytecode": {
+							"functionDebugData": {},
+							"generatedSources": [],
+							"immutableReferences": {},
+							"linkReferences": {},
+							"object": "",
+							"opcodes": "",
+							"sourceMap": ""
+						},
+						"gasEstimates": null,
+						"legacyAssembly": null,
+						"methodIdentifiers": {
+							"isAuthorizedV0(bytes32,address,bytes32,address,address)": "29b915b3"
+						}
+					},
+					"metadata": "{\"compiler\":{\"version\":\"0.8.28+commit.7893614a\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"requestId\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"airnode\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"endpointId\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"sponsor\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"requester\",\"type\":\"address\"}],\"name\":\"isAuthorizedV0\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/api3/contracts/authorizers/interfaces/IAuthorizerV0.sol\":\"IAuthorizerV0\"},\"evmVersion\":\"cancun\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"contracts/api3/contracts/authorizers/interfaces/IAuthorizerV0.sol\":{\"keccak256\":\"0xc20697f7891ba7d6fd684ed67583b715b275d2b3434dfcc8082310c1ebff6ac7\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://1cd1002bae8c0d06d1d60604da84c1755f0f2b1b0065cbc5b3f1529ea35ad1d7\",\"dweb:/ipfs/QmQhqHRemRZSQcqqcNeS27WgyV7K3nR86Ty9ufPDHHZq23\"]}},\"version\":1}",
+					"storageLayout": {
+						"storage": [],
+						"types": null
+					},
+					"userdoc": {
+						"kind": "user",
+						"methods": {},
+						"version": 1
+					}
+				}
+			},
+			"contracts/api3/contracts/authorizers/interfaces/IRequesterAuthorizer.sol": {
+				"IRequesterAuthorizer": {
+					"abi": [
+						{
+							"anonymous": false,
+							"inputs": [
+								{
+									"indexed": true,
+									"internalType": "address",
+									"name": "airnode",
+									"type": "address"
+								},
+								{
+									"indexed": false,
+									"internalType": "bytes32",
+									"name": "endpointId",
+									"type": "bytes32"
+								},
+								{
+									"indexed": true,
+									"internalType": "address",
+									"name": "requester",
+									"type": "address"
+								},
+								{
+									"indexed": true,
+									"internalType": "address",
+									"name": "sender",
+									"type": "address"
+								},
+								{
+									"indexed": false,
+									"internalType": "uint256",
+									"name": "expiration",
+									"type": "uint256"
+								}
+							],
+							"name": "ExtendedWhitelistExpiration",
+							"type": "event"
+						},
+						{
+							"anonymous": false,
+							"inputs": [
+								{
+									"indexed": true,
+									"internalType": "address",
+									"name": "airnode",
+									"type": "address"
+								},
+								{
+									"indexed": false,
+									"internalType": "bytes32",
+									"name": "endpointId",
+									"type": "bytes32"
+								},
+								{
+									"indexed": true,
+									"internalType": "address",
+									"name": "requester",
+									"type": "address"
+								},
+								{
+									"indexed": true,
+									"internalType": "address",
+									"name": "setter",
+									"type": "address"
+								},
+								{
+									"indexed": false,
+									"internalType": "address",
+									"name": "sender",
+									"type": "address"
+								},
+								{
+									"indexed": false,
+									"internalType": "uint192",
+									"name": "indefiniteWhitelistCount",
+									"type": "uint192"
+								}
+							],
+							"name": "RevokedIndefiniteWhitelistStatus",
+							"type": "event"
+						},
+						{
+							"anonymous": false,
+							"inputs": [
+								{
+									"indexed": true,
+									"internalType": "address",
+									"name": "airnode",
+									"type": "address"
+								},
+								{
+									"indexed": false,
+									"internalType": "bytes32",
+									"name": "endpointId",
+									"type": "bytes32"
+								},
+								{
+									"indexed": true,
+									"internalType": "address",
+									"name": "requester",
+									"type": "address"
+								},
+								{
+									"indexed": true,
+									"internalType": "address",
+									"name": "sender",
+									"type": "address"
+								},
+								{
+									"indexed": false,
+									"internalType": "bool",
+									"name": "status",
+									"type": "bool"
+								},
+								{
+									"indexed": false,
+									"internalType": "uint192",
+									"name": "indefiniteWhitelistCount",
+									"type": "uint192"
+								}
+							],
+							"name": "SetIndefiniteWhitelistStatus",
+							"type": "event"
+						},
+						{
+							"anonymous": false,
+							"inputs": [
+								{
+									"indexed": true,
+									"internalType": "address",
+									"name": "airnode",
+									"type": "address"
+								},
+								{
+									"indexed": false,
+									"internalType": "bytes32",
+									"name": "endpointId",
+									"type": "bytes32"
+								},
+								{
+									"indexed": true,
+									"internalType": "address",
+									"name": "requester",
+									"type": "address"
+								},
+								{
+									"indexed": true,
+									"internalType": "address",
+									"name": "sender",
+									"type": "address"
+								},
+								{
+									"indexed": false,
+									"internalType": "uint256",
+									"name": "expiration",
+									"type": "uint256"
+								}
+							],
+							"name": "SetWhitelistExpiration",
+							"type": "event"
+						},
+						{
+							"inputs": [
+								{
+									"internalType": "address",
+									"name": "airnode",
+									"type": "address"
+								},
+								{
+									"internalType": "bytes32",
+									"name": "endpointId",
+									"type": "bytes32"
+								},
+								{
+									"internalType": "address",
+									"name": "requester",
+									"type": "address"
+								},
+								{
+									"internalType": "address",
+									"name": "setter",
+									"type": "address"
+								}
+							],
+							"name": "airnodeToEndpointIdToRequesterToSetterToIndefiniteWhitelistStatus",
+							"outputs": [
+								{
+									"internalType": "bool",
+									"name": "indefiniteWhitelistStatus",
+									"type": "bool"
+								}
+							],
+							"stateMutability": "view",
+							"type": "function"
+						},
+						{
+							"inputs": [
+								{
+									"internalType": "address",
+									"name": "airnode",
+									"type": "address"
+								},
+								{
+									"internalType": "bytes32",
+									"name": "endpointId",
+									"type": "bytes32"
+								},
+								{
+									"internalType": "address",
+									"name": "requester",
+									"type": "address"
+								}
+							],
+							"name": "airnodeToEndpointIdToRequesterToWhitelistStatus",
+							"outputs": [
+								{
+									"internalType": "uint64",
+									"name": "expirationTimestamp",
+									"type": "uint64"
+								},
+								{
+									"internalType": "uint192",
+									"name": "indefiniteWhitelistCount",
+									"type": "uint192"
+								}
+							],
+							"stateMutability": "view",
+							"type": "function"
+						},
+						{
+							"inputs": [
+								{
+									"internalType": "address",
+									"name": "airnode",
+									"type": "address"
+								},
+								{
+									"internalType": "bytes32",
+									"name": "endpointId",
+									"type": "bytes32"
+								},
+								{
+									"internalType": "address",
+									"name": "requester",
+									"type": "address"
+								},
+								{
+									"internalType": "uint64",
+									"name": "expirationTimestamp",
+									"type": "uint64"
+								}
+							],
+							"name": "extendWhitelistExpiration",
+							"outputs": [],
+							"stateMutability": "nonpayable",
+							"type": "function"
+						},
+						{
+							"inputs": [
+								{
+									"internalType": "address",
+									"name": "airnode",
+									"type": "address"
+								},
+								{
+									"internalType": "bytes32",
+									"name": "endpointId",
+									"type": "bytes32"
+								},
+								{
+									"internalType": "address",
+									"name": "requester",
+									"type": "address"
+								}
+							],
+							"name": "isAuthorized",
+							"outputs": [
+								{
+									"internalType": "bool",
+									"name": "",
+									"type": "bool"
+								}
+							],
+							"stateMutability": "view",
+							"type": "function"
+						},
+						{
+							"inputs": [
+								{
+									"internalType": "bytes32",
+									"name": "requestId",
+									"type": "bytes32"
+								},
+								{
+									"internalType": "address",
+									"name": "airnode",
+									"type": "address"
+								},
+								{
+									"internalType": "bytes32",
+									"name": "endpointId",
+									"type": "bytes32"
+								},
+								{
+									"internalType": "address",
+									"name": "sponsor",
+									"type": "address"
+								},
+								{
+									"internalType": "address",
+									"name": "requester",
+									"type": "address"
+								}
+							],
+							"name": "isAuthorizedV0",
+							"outputs": [
+								{
+									"internalType": "bool",
+									"name": "",
+									"type": "bool"
+								}
+							],
+							"stateMutability": "view",
+							"type": "function"
+						},
+						{
+							"inputs": [
+								{
+									"internalType": "address",
+									"name": "airnode",
+									"type": "address"
+								},
+								{
+									"internalType": "bytes32",
+									"name": "endpointId",
+									"type": "bytes32"
+								},
+								{
+									"internalType": "address",
+									"name": "requester",
+									"type": "address"
+								},
+								{
+									"internalType": "address",
+									"name": "setter",
+									"type": "address"
+								}
+							],
+							"name": "revokeIndefiniteWhitelistStatus",
+							"outputs": [],
+							"stateMutability": "nonpayable",
+							"type": "function"
+						},
+						{
+							"inputs": [
+								{
+									"internalType": "address",
+									"name": "airnode",
+									"type": "address"
+								},
+								{
+									"internalType": "bytes32",
+									"name": "endpointId",
+									"type": "bytes32"
+								},
+								{
+									"internalType": "address",
+									"name": "requester",
+									"type": "address"
+								},
+								{
+									"internalType": "bool",
+									"name": "status",
+									"type": "bool"
+								}
+							],
+							"name": "setIndefiniteWhitelistStatus",
+							"outputs": [],
+							"stateMutability": "nonpayable",
+							"type": "function"
+						},
+						{
+							"inputs": [
+								{
+									"internalType": "address",
+									"name": "airnode",
+									"type": "address"
+								},
+								{
+									"internalType": "bytes32",
+									"name": "endpointId",
+									"type": "bytes32"
+								},
+								{
+									"internalType": "address",
+									"name": "requester",
+									"type": "address"
+								},
+								{
+									"internalType": "uint64",
+									"name": "expirationTimestamp",
+									"type": "uint64"
+								}
+							],
+							"name": "setWhitelistExpiration",
+							"outputs": [],
+							"stateMutability": "nonpayable",
+							"type": "function"
+						}
+					],
+					"devdoc": {
+						"kind": "dev",
+						"methods": {},
+						"version": 1
+					},
+					"evm": {
+						"assembly": "",
+						"bytecode": {
+							"functionDebugData": {},
+							"generatedSources": [],
+							"linkReferences": {},
+							"object": "",
+							"opcodes": "",
+							"sourceMap": ""
+						},
+						"deployedBytecode": {
+							"functionDebugData": {},
+							"generatedSources": [],
+							"immutableReferences": {},
+							"linkReferences": {},
+							"object": "",
+							"opcodes": "",
+							"sourceMap": ""
+						},
+						"gasEstimates": null,
+						"legacyAssembly": null,
+						"methodIdentifiers": {
+							"airnodeToEndpointIdToRequesterToSetterToIndefiniteWhitelistStatus(address,bytes32,address,address)": "216de27e",
+							"airnodeToEndpointIdToRequesterToWhitelistStatus(address,bytes32,address)": "82d229e3",
+							"extendWhitelistExpiration(address,bytes32,address,uint64)": "73c0627e",
+							"isAuthorized(address,bytes32,address)": "f57a044a",
+							"isAuthorizedV0(bytes32,address,bytes32,address,address)": "29b915b3",
+							"revokeIndefiniteWhitelistStatus(address,bytes32,address,address)": "7e766bc1",
+							"setIndefiniteWhitelistStatus(address,bytes32,address,bool)": "43b64962",
+							"setWhitelistExpiration(address,bytes32,address,uint64)": "4751c2e2"
+						}
+					},
+					"metadata": "{\"compiler\":{\"version\":\"0.8.28+commit.7893614a\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"airnode\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"bytes32\",\"name\":\"endpointId\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"requester\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"expiration\",\"type\":\"uint256\"}],\"name\":\"ExtendedWhitelistExpiration\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"airnode\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"bytes32\",\"name\":\"endpointId\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"requester\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"setter\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint192\",\"name\":\"indefiniteWhitelistCount\",\"type\":\"uint192\"}],\"name\":\"RevokedIndefiniteWhitelistStatus\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"airnode\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"bytes32\",\"name\":\"endpointId\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"requester\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"bool\",\"name\":\"status\",\"type\":\"bool\"},{\"indexed\":false,\"internalType\":\"uint192\",\"name\":\"indefiniteWhitelistCount\",\"type\":\"uint192\"}],\"name\":\"SetIndefiniteWhitelistStatus\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"airnode\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"bytes32\",\"name\":\"endpointId\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"requester\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"expiration\",\"type\":\"uint256\"}],\"name\":\"SetWhitelistExpiration\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"airnode\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"endpointId\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"requester\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"setter\",\"type\":\"address\"}],\"name\":\"airnodeToEndpointIdToRequesterToSetterToIndefiniteWhitelistStatus\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"indefiniteWhitelistStatus\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"airnode\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"endpointId\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"requester\",\"type\":\"address\"}],\"name\":\"airnodeToEndpointIdToRequesterToWhitelistStatus\",\"outputs\":[{\"internalType\":\"uint64\",\"name\":\"expirationTimestamp\",\"type\":\"uint64\"},{\"internalType\":\"uint192\",\"name\":\"indefiniteWhitelistCount\",\"type\":\"uint192\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"airnode\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"endpointId\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"requester\",\"type\":\"address\"},{\"internalType\":\"uint64\",\"name\":\"expirationTimestamp\",\"type\":\"uint64\"}],\"name\":\"extendWhitelistExpiration\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"airnode\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"endpointId\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"requester\",\"type\":\"address\"}],\"name\":\"isAuthorized\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"requestId\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"airnode\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"endpointId\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"sponsor\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"requester\",\"type\":\"address\"}],\"name\":\"isAuthorizedV0\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"airnode\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"endpointId\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"requester\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"setter\",\"type\":\"address\"}],\"name\":\"revokeIndefiniteWhitelistStatus\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"airnode\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"endpointId\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"requester\",\"type\":\"address\"},{\"internalType\":\"bool\",\"name\":\"status\",\"type\":\"bool\"}],\"name\":\"setIndefiniteWhitelistStatus\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"airnode\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"endpointId\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"requester\",\"type\":\"address\"},{\"internalType\":\"uint64\",\"name\":\"expirationTimestamp\",\"type\":\"uint64\"}],\"name\":\"setWhitelistExpiration\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/api3/contracts/authorizers/interfaces/IRequesterAuthorizer.sol\":\"IRequesterAuthorizer\"},\"evmVersion\":\"cancun\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"contracts/api3/contracts/authorizers/interfaces/IAuthorizerV0.sol\":{\"keccak256\":\"0xc20697f7891ba7d6fd684ed67583b715b275d2b3434dfcc8082310c1ebff6ac7\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://1cd1002bae8c0d06d1d60604da84c1755f0f2b1b0065cbc5b3f1529ea35ad1d7\",\"dweb:/ipfs/QmQhqHRemRZSQcqqcNeS27WgyV7K3nR86Ty9ufPDHHZq23\"]},\"contracts/api3/contracts/authorizers/interfaces/IRequesterAuthorizer.sol\":{\"keccak256\":\"0x6ac3b9339efcff2c277448aba1307deb3216cf050d6073008fb1e5c6e5a453dc\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://3c3cf08b92aa4bd7adfdcc69dc2daae0ef536dc7c893575d60ba52dd16701518\",\"dweb:/ipfs/QmQ3GEUo5r3zxkw9Yko1bY72ioNX49p1vUxV79p7T4Afxp\"]}},\"version\":1}",
+					"storageLayout": {
+						"storage": [],
+						"types": null
+					},
+					"userdoc": {
+						"kind": "user",
+						"methods": {},
+						"version": 1
+					}
+				}
+			},
+			"contracts/api3/contracts/authorizers/interfaces/IRequesterAuthorizerWithManager.sol": {
+				"IRequesterAuthorizerWithManager": {
+					"abi": [
+						{
+							"anonymous": false,
+							"inputs": [
+								{
+									"indexed": true,
+									"internalType": "address",
+									"name": "airnode",
+									"type": "address"
+								},
+								{
+									"indexed": false,
+									"internalType": "bytes32",
+									"name": "endpointId",
+									"type": "bytes32"
+								},
+								{
+									"indexed": true,
+									"internalType": "address",
+									"name": "requester",
+									"type": "address"
+								},
+								{
+									"indexed": true,
+									"internalType": "address",
+									"name": "sender",
+									"type": "address"
+								},
+								{
+									"indexed": false,
+									"internalType": "uint256",
+									"name": "expiration",
+									"type": "uint256"
+								}
+							],
+							"name": "ExtendedWhitelistExpiration",
+							"type": "event"
+						},
+						{
+							"anonymous": false,
+							"inputs": [
+								{
+									"indexed": true,
+									"internalType": "address",
+									"name": "airnode",
+									"type": "address"
+								},
+								{
+									"indexed": false,
+									"internalType": "bytes32",
+									"name": "endpointId",
+									"type": "bytes32"
+								},
+								{
+									"indexed": true,
+									"internalType": "address",
+									"name": "requester",
+									"type": "address"
+								},
+								{
+									"indexed": true,
+									"internalType": "address",
+									"name": "setter",
+									"type": "address"
+								},
+								{
+									"indexed": false,
+									"internalType": "address",
+									"name": "sender",
+									"type": "address"
+								},
+								{
+									"indexed": false,
+									"internalType": "uint192",
+									"name": "indefiniteWhitelistCount",
+									"type": "uint192"
+								}
+							],
+							"name": "RevokedIndefiniteWhitelistStatus",
+							"type": "event"
+						},
+						{
+							"anonymous": false,
+							"inputs": [
+								{
+									"indexed": true,
+									"internalType": "address",
+									"name": "airnode",
+									"type": "address"
+								},
+								{
+									"indexed": false,
+									"internalType": "bytes32",
+									"name": "endpointId",
+									"type": "bytes32"
+								},
+								{
+									"indexed": true,
+									"internalType": "address",
+									"name": "requester",
+									"type": "address"
+								},
+								{
+									"indexed": true,
+									"internalType": "address",
+									"name": "sender",
+									"type": "address"
+								},
+								{
+									"indexed": false,
+									"internalType": "bool",
+									"name": "status",
+									"type": "bool"
+								},
+								{
+									"indexed": false,
+									"internalType": "uint192",
+									"name": "indefiniteWhitelistCount",
+									"type": "uint192"
+								}
+							],
+							"name": "SetIndefiniteWhitelistStatus",
+							"type": "event"
+						},
+						{
+							"anonymous": false,
+							"inputs": [
+								{
+									"indexed": true,
+									"internalType": "address",
+									"name": "airnode",
+									"type": "address"
+								},
+								{
+									"indexed": false,
+									"internalType": "bytes32",
+									"name": "endpointId",
+									"type": "bytes32"
+								},
+								{
+									"indexed": true,
+									"internalType": "address",
+									"name": "requester",
+									"type": "address"
+								},
+								{
+									"indexed": true,
+									"internalType": "address",
+									"name": "sender",
+									"type": "address"
+								},
+								{
+									"indexed": false,
+									"internalType": "uint256",
+									"name": "expiration",
+									"type": "uint256"
+								}
+							],
+							"name": "SetWhitelistExpiration",
+							"type": "event"
+						},
+						{
+							"inputs": [],
+							"name": "INDEFINITE_WHITELISTER_ROLE_DESCRIPTION",
+							"outputs": [
+								{
+									"internalType": "string",
+									"name": "",
+									"type": "string"
+								}
+							],
+							"stateMutability": "view",
+							"type": "function"
+						},
+						{
+							"inputs": [],
+							"name": "WHITELIST_EXPIRATION_EXTENDER_ROLE_DESCRIPTION",
+							"outputs": [
+								{
+									"internalType": "string",
+									"name": "",
+									"type": "string"
+								}
+							],
+							"stateMutability": "view",
+							"type": "function"
+						},
+						{
+							"inputs": [],
+							"name": "WHITELIST_EXPIRATION_SETTER_ROLE_DESCRIPTION",
+							"outputs": [
+								{
+									"internalType": "string",
+									"name": "",
+									"type": "string"
+								}
+							],
+							"stateMutability": "view",
+							"type": "function"
+						},
+						{
+							"inputs": [],
+							"name": "accessControlRegistry",
+							"outputs": [
+								{
+									"internalType": "address",
+									"name": "",
+									"type": "address"
+								}
+							],
+							"stateMutability": "view",
+							"type": "function"
+						},
+						{
+							"inputs": [],
+							"name": "adminRole",
+							"outputs": [
+								{
+									"internalType": "bytes32",
+									"name": "",
+									"type": "bytes32"
+								}
+							],
+							"stateMutability": "view",
+							"type": "function"
+						},
+						{
+							"inputs": [],
+							"name": "adminRoleDescription",
+							"outputs": [
+								{
+									"internalType": "string",
+									"name": "",
+									"type": "string"
+								}
+							],
+							"stateMutability": "view",
+							"type": "function"
+						},
+						{
+							"inputs": [
+								{
+									"internalType": "address",
+									"name": "airnode",
+									"type": "address"
+								},
+								{
+									"internalType": "bytes32",
+									"name": "endpointId",
+									"type": "bytes32"
+								},
+								{
+									"internalType": "address",
+									"name": "requester",
+									"type": "address"
+								},
+								{
+									"internalType": "address",
+									"name": "setter",
+									"type": "address"
+								}
+							],
+							"name": "airnodeToEndpointIdToRequesterToSetterToIndefiniteWhitelistStatus",
+							"outputs": [
+								{
+									"internalType": "bool",
+									"name": "indefiniteWhitelistStatus",
+									"type": "bool"
+								}
+							],
+							"stateMutability": "view",
+							"type": "function"
+						},
+						{
+							"inputs": [
+								{
+									"internalType": "address",
+									"name": "airnode",
+									"type": "address"
+								},
+								{
+									"internalType": "bytes32",
+									"name": "endpointId",
+									"type": "bytes32"
+								},
+								{
+									"internalType": "address",
+									"name": "requester",
+									"type": "address"
+								}
+							],
+							"name": "airnodeToEndpointIdToRequesterToWhitelistStatus",
+							"outputs": [
+								{
+									"internalType": "uint64",
+									"name": "expirationTimestamp",
+									"type": "uint64"
+								},
+								{
+									"internalType": "uint192",
+									"name": "indefiniteWhitelistCount",
+									"type": "uint192"
+								}
+							],
+							"stateMutability": "view",
+							"type": "function"
+						},
+						{
+							"inputs": [
+								{
+									"internalType": "address",
+									"name": "airnode",
+									"type": "address"
+								},
+								{
+									"internalType": "bytes32",
+									"name": "endpointId",
+									"type": "bytes32"
+								},
+								{
+									"internalType": "address",
+									"name": "requester",
+									"type": "address"
+								},
+								{
+									"internalType": "uint64",
+									"name": "expirationTimestamp",
+									"type": "uint64"
+								}
+							],
+							"name": "extendWhitelistExpiration",
+							"outputs": [],
+							"stateMutability": "nonpayable",
+							"type": "function"
+						},
+						{
+							"inputs": [],
+							"name": "indefiniteWhitelisterRole",
+							"outputs": [
+								{
+									"internalType": "bytes32",
+									"name": "",
+									"type": "bytes32"
+								}
+							],
+							"stateMutability": "view",
+							"type": "function"
+						},
+						{
+							"inputs": [
+								{
+									"internalType": "address",
+									"name": "airnode",
+									"type": "address"
+								},
+								{
+									"internalType": "bytes32",
+									"name": "endpointId",
+									"type": "bytes32"
+								},
+								{
+									"internalType": "address",
+									"name": "requester",
+									"type": "address"
+								}
+							],
+							"name": "isAuthorized",
+							"outputs": [
+								{
+									"internalType": "bool",
+									"name": "",
+									"type": "bool"
+								}
+							],
+							"stateMutability": "view",
+							"type": "function"
+						},
+						{
+							"inputs": [
+								{
+									"internalType": "bytes32",
+									"name": "requestId",
+									"type": "bytes32"
+								},
+								{
+									"internalType": "address",
+									"name": "airnode",
+									"type": "address"
+								},
+								{
+									"internalType": "bytes32",
+									"name": "endpointId",
+									"type": "bytes32"
+								},
+								{
+									"internalType": "address",
+									"name": "sponsor",
+									"type": "address"
+								},
+								{
+									"internalType": "address",
+									"name": "requester",
+									"type": "address"
+								}
+							],
+							"name": "isAuthorizedV0",
+							"outputs": [
+								{
+									"internalType": "bool",
+									"name": "",
+									"type": "bool"
+								}
+							],
+							"stateMutability": "view",
+							"type": "function"
+						},
+						{
+							"inputs": [],
+							"name": "manager",
+							"outputs": [
+								{
+									"internalType": "address",
+									"name": "",
+									"type": "address"
+								}
+							],
+							"stateMutability": "view",
+							"type": "function"
+						},
+						{
+							"inputs": [
+								{
+									"internalType": "address",
+									"name": "airnode",
+									"type": "address"
+								},
+								{
+									"internalType": "bytes32",
+									"name": "endpointId",
+									"type": "bytes32"
+								},
+								{
+									"internalType": "address",
+									"name": "requester",
+									"type": "address"
+								},
+								{
+									"internalType": "address",
+									"name": "setter",
+									"type": "address"
+								}
+							],
+							"name": "revokeIndefiniteWhitelistStatus",
+							"outputs": [],
+							"stateMutability": "nonpayable",
+							"type": "function"
+						},
+						{
+							"inputs": [
+								{
+									"internalType": "address",
+									"name": "airnode",
+									"type": "address"
+								},
+								{
+									"internalType": "bytes32",
+									"name": "endpointId",
+									"type": "bytes32"
+								},
+								{
+									"internalType": "address",
+									"name": "requester",
+									"type": "address"
+								},
+								{
+									"internalType": "bool",
+									"name": "status",
+									"type": "bool"
+								}
+							],
+							"name": "setIndefiniteWhitelistStatus",
+							"outputs": [],
+							"stateMutability": "nonpayable",
+							"type": "function"
+						},
+						{
+							"inputs": [
+								{
+									"internalType": "address",
+									"name": "airnode",
+									"type": "address"
+								},
+								{
+									"internalType": "bytes32",
+									"name": "endpointId",
+									"type": "bytes32"
+								},
+								{
+									"internalType": "address",
+									"name": "requester",
+									"type": "address"
+								},
+								{
+									"internalType": "uint64",
+									"name": "expirationTimestamp",
+									"type": "uint64"
+								}
+							],
+							"name": "setWhitelistExpiration",
+							"outputs": [],
+							"stateMutability": "nonpayable",
+							"type": "function"
+						},
+						{
+							"inputs": [],
+							"name": "whitelistExpirationExtenderRole",
+							"outputs": [
+								{
+									"internalType": "bytes32",
+									"name": "",
+									"type": "bytes32"
+								}
+							],
+							"stateMutability": "view",
+							"type": "function"
+						},
+						{
+							"inputs": [],
+							"name": "whitelistExpirationSetterRole",
+							"outputs": [
+								{
+									"internalType": "bytes32",
+									"name": "",
+									"type": "bytes32"
+								}
+							],
+							"stateMutability": "view",
+							"type": "function"
+						}
+					],
+					"devdoc": {
+						"kind": "dev",
+						"methods": {},
+						"version": 1
+					},
+					"evm": {
+						"assembly": "",
+						"bytecode": {
+							"functionDebugData": {},
+							"generatedSources": [],
+							"linkReferences": {},
+							"object": "",
+							"opcodes": "",
+							"sourceMap": ""
+						},
+						"deployedBytecode": {
+							"functionDebugData": {},
+							"generatedSources": [],
+							"immutableReferences": {},
+							"linkReferences": {},
+							"object": "",
+							"opcodes": "",
+							"sourceMap": ""
+						},
+						"gasEstimates": null,
+						"legacyAssembly": null,
+						"methodIdentifiers": {
+							"INDEFINITE_WHITELISTER_ROLE_DESCRIPTION()": "d55a42dd",
+							"WHITELIST_EXPIRATION_EXTENDER_ROLE_DESCRIPTION()": "6db798f9",
+							"WHITELIST_EXPIRATION_SETTER_ROLE_DESCRIPTION()": "6bd2bdd0",
+							"accessControlRegistry()": "1ce9ae07",
+							"adminRole()": "009f2f3c",
+							"adminRoleDescription()": "4c8f1d8d",
+							"airnodeToEndpointIdToRequesterToSetterToIndefiniteWhitelistStatus(address,bytes32,address,address)": "216de27e",
+							"airnodeToEndpointIdToRequesterToWhitelistStatus(address,bytes32,address)": "82d229e3",
+							"extendWhitelistExpiration(address,bytes32,address,uint64)": "73c0627e",
+							"indefiniteWhitelisterRole()": "e18de857",
+							"isAuthorized(address,bytes32,address)": "f57a044a",
+							"isAuthorizedV0(bytes32,address,bytes32,address,address)": "29b915b3",
+							"manager()": "481c6a75",
+							"revokeIndefiniteWhitelistStatus(address,bytes32,address,address)": "7e766bc1",
+							"setIndefiniteWhitelistStatus(address,bytes32,address,bool)": "43b64962",
+							"setWhitelistExpiration(address,bytes32,address,uint64)": "4751c2e2",
+							"whitelistExpirationExtenderRole()": "7c706738",
+							"whitelistExpirationSetterRole()": "8fe47dd8"
+						}
+					},
+					"metadata": "{\"compiler\":{\"version\":\"0.8.28+commit.7893614a\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"airnode\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"bytes32\",\"name\":\"endpointId\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"requester\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"expiration\",\"type\":\"uint256\"}],\"name\":\"ExtendedWhitelistExpiration\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"airnode\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"bytes32\",\"name\":\"endpointId\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"requester\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"setter\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint192\",\"name\":\"indefiniteWhitelistCount\",\"type\":\"uint192\"}],\"name\":\"RevokedIndefiniteWhitelistStatus\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"airnode\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"bytes32\",\"name\":\"endpointId\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"requester\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"bool\",\"name\":\"status\",\"type\":\"bool\"},{\"indexed\":false,\"internalType\":\"uint192\",\"name\":\"indefiniteWhitelistCount\",\"type\":\"uint192\"}],\"name\":\"SetIndefiniteWhitelistStatus\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"airnode\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"bytes32\",\"name\":\"endpointId\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"requester\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"expiration\",\"type\":\"uint256\"}],\"name\":\"SetWhitelistExpiration\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"INDEFINITE_WHITELISTER_ROLE_DESCRIPTION\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"WHITELIST_EXPIRATION_EXTENDER_ROLE_DESCRIPTION\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"WHITELIST_EXPIRATION_SETTER_ROLE_DESCRIPTION\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"accessControlRegistry\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"adminRole\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"adminRoleDescription\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"airnode\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"endpointId\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"requester\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"setter\",\"type\":\"address\"}],\"name\":\"airnodeToEndpointIdToRequesterToSetterToIndefiniteWhitelistStatus\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"indefiniteWhitelistStatus\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"airnode\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"endpointId\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"requester\",\"type\":\"address\"}],\"name\":\"airnodeToEndpointIdToRequesterToWhitelistStatus\",\"outputs\":[{\"internalType\":\"uint64\",\"name\":\"expirationTimestamp\",\"type\":\"uint64\"},{\"internalType\":\"uint192\",\"name\":\"indefiniteWhitelistCount\",\"type\":\"uint192\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"airnode\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"endpointId\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"requester\",\"type\":\"address\"},{\"internalType\":\"uint64\",\"name\":\"expirationTimestamp\",\"type\":\"uint64\"}],\"name\":\"extendWhitelistExpiration\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"indefiniteWhitelisterRole\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"airnode\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"endpointId\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"requester\",\"type\":\"address\"}],\"name\":\"isAuthorized\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"requestId\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"airnode\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"endpointId\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"sponsor\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"requester\",\"type\":\"address\"}],\"name\":\"isAuthorizedV0\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"manager\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"airnode\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"endpointId\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"requester\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"setter\",\"type\":\"address\"}],\"name\":\"revokeIndefiniteWhitelistStatus\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"airnode\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"endpointId\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"requester\",\"type\":\"address\"},{\"internalType\":\"bool\",\"name\":\"status\",\"type\":\"bool\"}],\"name\":\"setIndefiniteWhitelistStatus\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"airnode\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"endpointId\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"requester\",\"type\":\"address\"},{\"internalType\":\"uint64\",\"name\":\"expirationTimestamp\",\"type\":\"uint64\"}],\"name\":\"setWhitelistExpiration\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"whitelistExpirationExtenderRole\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"whitelistExpirationSetterRole\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/api3/contracts/authorizers/interfaces/IRequesterAuthorizerWithManager.sol\":\"IRequesterAuthorizerWithManager\"},\"evmVersion\":\"cancun\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"contracts/api3/contracts/access-control-registry/interfaces/IAccessControlRegistryAdminned.sol\":{\"keccak256\":\"0x0f3ad45d6e1a4815cfaff171926ad5352d499a431b041b11adb316f4569bcce4\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://e42cc3177cb7af316d8bc8bf9d35a23c76561cc00ad15d8d2a79a27565c2f78e\",\"dweb:/ipfs/QmUfTP9ZkKYmJYro5fJujV1YdLvcZAhgwRMsiXPV91EnYG\"]},\"contracts/api3/contracts/access-control-registry/interfaces/IAccessControlRegistryAdminnedWithManager.sol\":{\"keccak256\":\"0x8a8e1756fca81175305755b7a311536132e88173f60b2ac0fdeef92a6236afc5\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://154fe905383d7d4b47568ffbc900c5cba6e2d58b2a7baef036e8ce47f0cd7048\",\"dweb:/ipfs/QmP9ovc77zXYX62SA27nj1QeG97yb6nDid8aRrsc7Mts6E\"]},\"contracts/api3/contracts/access-control-registry/interfaces/IAccessControlRegistryUser.sol\":{\"keccak256\":\"0xce1ceb04823a801ea173fe5140344645295768ff1b4d2ee2969c2f4b362102ca\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://506b04499e6b82dcc3287f7c1af874efda1a5b40b118bd0983fba25a219bc741\",\"dweb:/ipfs/QmQd74L793o79P9gWhyJryRgNXuzcdjvgWFeamAHC83chY\"]},\"contracts/api3/contracts/authorizers/interfaces/IAuthorizerV0.sol\":{\"keccak256\":\"0xc20697f7891ba7d6fd684ed67583b715b275d2b3434dfcc8082310c1ebff6ac7\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://1cd1002bae8c0d06d1d60604da84c1755f0f2b1b0065cbc5b3f1529ea35ad1d7\",\"dweb:/ipfs/QmQhqHRemRZSQcqqcNeS27WgyV7K3nR86Ty9ufPDHHZq23\"]},\"contracts/api3/contracts/authorizers/interfaces/IRequesterAuthorizer.sol\":{\"keccak256\":\"0x6ac3b9339efcff2c277448aba1307deb3216cf050d6073008fb1e5c6e5a453dc\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://3c3cf08b92aa4bd7adfdcc69dc2daae0ef536dc7c893575d60ba52dd16701518\",\"dweb:/ipfs/QmQ3GEUo5r3zxkw9Yko1bY72ioNX49p1vUxV79p7T4Afxp\"]},\"contracts/api3/contracts/authorizers/interfaces/IRequesterAuthorizerWithManager.sol\":{\"keccak256\":\"0xac6f01746a411b9f9a4cce955fc764a217a12d9e75e542bc7b2826dbd9f47636\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://d13c9f77ebeaae40dd972a58b08e5e1b876de01fdd30088ea880bd1228fe6750\",\"dweb:/ipfs/QmVke26K7VxmFWBjLsWhP8icFd9gQwVGrynTC5QHeGMEPE\"]},\"contracts/api3/contracts/whitelist/interfaces/IWhitelistRoles.sol\":{\"keccak256\":\"0x1143190e909f6aa779e99d143fdb26a91e42d269814a0d76152d31418db39fbf\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://601d7590f26650c5a2d4ba9788c48bb6c3d8c1a2fce0c0c5ffb23791b6c25713\",\"dweb:/ipfs/QmTdcp84W9fHSYEuGCn21V7Xxmh2TMFurA1LDe44Wm2ZxQ\"]},\"contracts/api3/contracts/whitelist/interfaces/IWhitelistRolesWithManager.sol\":{\"keccak256\":\"0xe9c34f92e73b4231b96db8b57c86d4d1be2822b73de74a09b6f9d41b433a7310\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://0682fe6a33eb286625e4057a7a9b67e3ebd055605e7872fda1644d8aa672a63e\",\"dweb:/ipfs/QmfJ5RHD8G7MvjS6h5Kkp4xRh9Uyy4LBcgq1ZapJJNw9Xo\"]}},\"version\":1}",
+					"storageLayout": {
+						"storage": [],
+						"types": null
+					},
+					"userdoc": {
+						"kind": "user",
+						"methods": {},
+						"version": 1
+					}
+				}
+			},
+			"contracts/api3/contracts/whitelist/interfaces/IWhitelistRoles.sol": {
+				"IWhitelistRoles": {
+					"abi": [
+						{
+							"inputs": [],
+							"name": "INDEFINITE_WHITELISTER_ROLE_DESCRIPTION",
+							"outputs": [
+								{
+									"internalType": "string",
+									"name": "",
+									"type": "string"
+								}
+							],
+							"stateMutability": "view",
+							"type": "function"
+						},
+						{
+							"inputs": [],
+							"name": "WHITELIST_EXPIRATION_EXTENDER_ROLE_DESCRIPTION",
+							"outputs": [
+								{
+									"internalType": "string",
+									"name": "",
+									"type": "string"
+								}
+							],
+							"stateMutability": "view",
+							"type": "function"
+						},
+						{
+							"inputs": [],
+							"name": "WHITELIST_EXPIRATION_SETTER_ROLE_DESCRIPTION",
+							"outputs": [
+								{
+									"internalType": "string",
+									"name": "",
+									"type": "string"
+								}
+							],
+							"stateMutability": "view",
+							"type": "function"
+						}
+					],
+					"devdoc": {
+						"kind": "dev",
+						"methods": {},
+						"version": 1
+					},
+					"evm": {
+						"assembly": "",
+						"bytecode": {
+							"functionDebugData": {},
+							"generatedSources": [],
+							"linkReferences": {},
+							"object": "",
+							"opcodes": "",
+							"sourceMap": ""
+						},
+						"deployedBytecode": {
+							"functionDebugData": {},
+							"generatedSources": [],
+							"immutableReferences": {},
+							"linkReferences": {},
+							"object": "",
+							"opcodes": "",
+							"sourceMap": ""
+						},
+						"gasEstimates": null,
+						"legacyAssembly": null,
+						"methodIdentifiers": {
+							"INDEFINITE_WHITELISTER_ROLE_DESCRIPTION()": "d55a42dd",
+							"WHITELIST_EXPIRATION_EXTENDER_ROLE_DESCRIPTION()": "6db798f9",
+							"WHITELIST_EXPIRATION_SETTER_ROLE_DESCRIPTION()": "6bd2bdd0"
+						}
+					},
+					"metadata": "{\"compiler\":{\"version\":\"0.8.28+commit.7893614a\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"INDEFINITE_WHITELISTER_ROLE_DESCRIPTION\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"WHITELIST_EXPIRATION_EXTENDER_ROLE_DESCRIPTION\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"WHITELIST_EXPIRATION_SETTER_ROLE_DESCRIPTION\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/api3/contracts/whitelist/interfaces/IWhitelistRoles.sol\":\"IWhitelistRoles\"},\"evmVersion\":\"cancun\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"contracts/api3/contracts/whitelist/interfaces/IWhitelistRoles.sol\":{\"keccak256\":\"0x1143190e909f6aa779e99d143fdb26a91e42d269814a0d76152d31418db39fbf\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://601d7590f26650c5a2d4ba9788c48bb6c3d8c1a2fce0c0c5ffb23791b6c25713\",\"dweb:/ipfs/QmTdcp84W9fHSYEuGCn21V7Xxmh2TMFurA1LDe44Wm2ZxQ\"]}},\"version\":1}",
+					"storageLayout": {
+						"storage": [],
+						"types": null
+					},
+					"userdoc": {
+						"kind": "user",
+						"methods": {},
+						"version": 1
+					}
+				}
+			},
+			"contracts/api3/contracts/whitelist/interfaces/IWhitelistRolesWithManager.sol": {
+				"IWhitelistRolesWithManager": {
+					"abi": [
+						{
+							"inputs": [],
+							"name": "INDEFINITE_WHITELISTER_ROLE_DESCRIPTION",
+							"outputs": [
+								{
+									"internalType": "string",
+									"name": "",
+									"type": "string"
+								}
+							],
+							"stateMutability": "view",
+							"type": "function"
+						},
+						{
+							"inputs": [],
+							"name": "WHITELIST_EXPIRATION_EXTENDER_ROLE_DESCRIPTION",
+							"outputs": [
+								{
+									"internalType": "string",
+									"name": "",
+									"type": "string"
+								}
+							],
+							"stateMutability": "view",
+							"type": "function"
+						},
+						{
+							"inputs": [],
+							"name": "WHITELIST_EXPIRATION_SETTER_ROLE_DESCRIPTION",
+							"outputs": [
+								{
+									"internalType": "string",
+									"name": "",
+									"type": "string"
+								}
+							],
+							"stateMutability": "view",
+							"type": "function"
+						},
+						{
+							"inputs": [],
+							"name": "accessControlRegistry",
+							"outputs": [
+								{
+									"internalType": "address",
+									"name": "",
+									"type": "address"
+								}
+							],
+							"stateMutability": "view",
+							"type": "function"
+						},
+						{
+							"inputs": [],
+							"name": "adminRole",
+							"outputs": [
+								{
+									"internalType": "bytes32",
+									"name": "",
+									"type": "bytes32"
+								}
+							],
+							"stateMutability": "view",
+							"type": "function"
+						},
+						{
+							"inputs": [],
+							"name": "adminRoleDescription",
+							"outputs": [
+								{
+									"internalType": "string",
+									"name": "",
+									"type": "string"
+								}
+							],
+							"stateMutability": "view",
+							"type": "function"
+						},
+						{
+							"inputs": [],
+							"name": "indefiniteWhitelisterRole",
+							"outputs": [
+								{
+									"internalType": "bytes32",
+									"name": "",
+									"type": "bytes32"
+								}
+							],
+							"stateMutability": "view",
+							"type": "function"
+						},
+						{
+							"inputs": [],
+							"name": "manager",
+							"outputs": [
+								{
+									"internalType": "address",
+									"name": "",
+									"type": "address"
+								}
+							],
+							"stateMutability": "view",
+							"type": "function"
+						},
+						{
+							"inputs": [],
+							"name": "whitelistExpirationExtenderRole",
+							"outputs": [
+								{
+									"internalType": "bytes32",
+									"name": "",
+									"type": "bytes32"
+								}
+							],
+							"stateMutability": "view",
+							"type": "function"
+						},
+						{
+							"inputs": [],
+							"name": "whitelistExpirationSetterRole",
+							"outputs": [
+								{
+									"internalType": "bytes32",
+									"name": "",
+									"type": "bytes32"
+								}
+							],
+							"stateMutability": "view",
+							"type": "function"
+						}
+					],
+					"devdoc": {
+						"kind": "dev",
+						"methods": {},
+						"version": 1
+					},
+					"evm": {
+						"assembly": "",
+						"bytecode": {
+							"functionDebugData": {},
+							"generatedSources": [],
+							"linkReferences": {},
+							"object": "",
+							"opcodes": "",
+							"sourceMap": ""
+						},
+						"deployedBytecode": {
+							"functionDebugData": {},
+							"generatedSources": [],
+							"immutableReferences": {},
+							"linkReferences": {},
+							"object": "",
+							"opcodes": "",
+							"sourceMap": ""
+						},
+						"gasEstimates": null,
+						"legacyAssembly": null,
+						"methodIdentifiers": {
+							"INDEFINITE_WHITELISTER_ROLE_DESCRIPTION()": "d55a42dd",
+							"WHITELIST_EXPIRATION_EXTENDER_ROLE_DESCRIPTION()": "6db798f9",
+							"WHITELIST_EXPIRATION_SETTER_ROLE_DESCRIPTION()": "6bd2bdd0",
+							"accessControlRegistry()": "1ce9ae07",
+							"adminRole()": "009f2f3c",
+							"adminRoleDescription()": "4c8f1d8d",
+							"indefiniteWhitelisterRole()": "e18de857",
+							"manager()": "481c6a75",
+							"whitelistExpirationExtenderRole()": "7c706738",
+							"whitelistExpirationSetterRole()": "8fe47dd8"
+						}
+					},
+					"metadata": "{\"compiler\":{\"version\":\"0.8.28+commit.7893614a\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"INDEFINITE_WHITELISTER_ROLE_DESCRIPTION\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"WHITELIST_EXPIRATION_EXTENDER_ROLE_DESCRIPTION\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"WHITELIST_EXPIRATION_SETTER_ROLE_DESCRIPTION\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"accessControlRegistry\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"adminRole\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"adminRoleDescription\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"indefiniteWhitelisterRole\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"manager\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"whitelistExpirationExtenderRole\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"whitelistExpirationSetterRole\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/api3/contracts/whitelist/interfaces/IWhitelistRolesWithManager.sol\":\"IWhitelistRolesWithManager\"},\"evmVersion\":\"cancun\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"contracts/api3/contracts/access-control-registry/interfaces/IAccessControlRegistryAdminned.sol\":{\"keccak256\":\"0x0f3ad45d6e1a4815cfaff171926ad5352d499a431b041b11adb316f4569bcce4\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://e42cc3177cb7af316d8bc8bf9d35a23c76561cc00ad15d8d2a79a27565c2f78e\",\"dweb:/ipfs/QmUfTP9ZkKYmJYro5fJujV1YdLvcZAhgwRMsiXPV91EnYG\"]},\"contracts/api3/contracts/access-control-registry/interfaces/IAccessControlRegistryAdminnedWithManager.sol\":{\"keccak256\":\"0x8a8e1756fca81175305755b7a311536132e88173f60b2ac0fdeef92a6236afc5\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://154fe905383d7d4b47568ffbc900c5cba6e2d58b2a7baef036e8ce47f0cd7048\",\"dweb:/ipfs/QmP9ovc77zXYX62SA27nj1QeG97yb6nDid8aRrsc7Mts6E\"]},\"contracts/api3/contracts/access-control-registry/interfaces/IAccessControlRegistryUser.sol\":{\"keccak256\":\"0xce1ceb04823a801ea173fe5140344645295768ff1b4d2ee2969c2f4b362102ca\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://506b04499e6b82dcc3287f7c1af874efda1a5b40b118bd0983fba25a219bc741\",\"dweb:/ipfs/QmQd74L793o79P9gWhyJryRgNXuzcdjvgWFeamAHC83chY\"]},\"contracts/api3/contracts/whitelist/interfaces/IWhitelistRoles.sol\":{\"keccak256\":\"0x1143190e909f6aa779e99d143fdb26a91e42d269814a0d76152d31418db39fbf\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://601d7590f26650c5a2d4ba9788c48bb6c3d8c1a2fce0c0c5ffb23791b6c25713\",\"dweb:/ipfs/QmTdcp84W9fHSYEuGCn21V7Xxmh2TMFurA1LDe44Wm2ZxQ\"]},\"contracts/api3/contracts/whitelist/interfaces/IWhitelistRolesWithManager.sol\":{\"keccak256\":\"0xe9c34f92e73b4231b96db8b57c86d4d1be2822b73de74a09b6f9d41b433a7310\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://0682fe6a33eb286625e4057a7a9b67e3ebd055605e7872fda1644d8aa672a63e\",\"dweb:/ipfs/QmfJ5RHD8G7MvjS6h5Kkp4xRh9Uyy4LBcgq1ZapJJNw9Xo\"]}},\"version\":1}",
+					"storageLayout": {
+						"storage": [],
+						"types": null
+					},
+					"userdoc": {
+						"kind": "user",
+						"methods": {},
+						"version": 1
+					}
+				}
+			}
+		},
+		"sources": {
+			"contracts/api3/contracts/access-control-registry/interfaces/IAccessControlRegistryAdminned.sol": {
+				"ast": {
+					"absolutePath": "contracts/api3/contracts/access-control-registry/interfaces/IAccessControlRegistryAdminned.sol",
+					"exportedSymbols": {
+						"IAccessControlRegistryAdminned": [
+							10
+						],
+						"IAccessControlRegistryUser": [
+							34
+						]
+					},
+					"id": 11,
+					"license": "MIT",
+					"nodeType": "SourceUnit",
+					"nodes": [
+						{
+							"id": 1,
+							"literals": [
+								"solidity",
+								"^",
+								"0.8",
+								".0"
+							],
+							"nodeType": "PragmaDirective",
+							"src": "32:23:0"
+						},
+						{
+							"absolutePath": "contracts/api3/contracts/access-control-registry/interfaces/IAccessControlRegistryUser.sol",
+							"file": "./IAccessControlRegistryUser.sol",
+							"id": 2,
+							"nameLocation": "-1:-1:-1",
+							"nodeType": "ImportDirective",
+							"scope": 11,
+							"sourceUnit": 35,
+							"src": "57:42:0",
+							"symbolAliases": [],
+							"unitAlias": ""
+						},
+						{
+							"abstract": false,
+							"baseContracts": [
+								{
+									"baseName": {
+										"id": 3,
+										"name": "IAccessControlRegistryUser",
+										"nameLocations": [
+											"145:26:0"
+										],
+										"nodeType": "IdentifierPath",
+										"referencedDeclaration": 34,
+										"src": "145:26:0"
+									},
+									"id": 4,
+									"nodeType": "InheritanceSpecifier",
+									"src": "145:26:0"
+								}
+							],
+							"canonicalName": "IAccessControlRegistryAdminned",
+							"contractDependencies": [],
+							"contractKind": "interface",
+							"fullyImplemented": false,
+							"id": 10,
+							"linearizedBaseContracts": [
+								10,
+								34
+							],
+							"name": "IAccessControlRegistryAdminned",
+							"nameLocation": "111:30:0",
+							"nodeType": "ContractDefinition",
+							"nodes": [
+								{
+									"functionSelector": "4c8f1d8d",
+									"id": 9,
+									"implemented": false,
+									"kind": "function",
+									"modifiers": [],
+									"name": "adminRoleDescription",
+									"nameLocation": "187:20:0",
+									"nodeType": "FunctionDefinition",
+									"parameters": {
+										"id": 5,
+										"nodeType": "ParameterList",
+										"parameters": [],
+										"src": "207:2:0"
+									},
+									"returnParameters": {
+										"id": 8,
+										"nodeType": "ParameterList",
+										"parameters": [
+											{
+												"constant": false,
+												"id": 7,
+												"mutability": "mutable",
+												"name": "",
+												"nameLocation": "-1:-1:-1",
+												"nodeType": "VariableDeclaration",
+												"scope": 9,
+												"src": "233:13:0",
+												"stateVariable": false,
+												"storageLocation": "memory",
+												"typeDescriptions": {
+													"typeIdentifier": "t_string_memory_ptr",
+													"typeString": "string"
+												},
+												"typeName": {
+													"id": 6,
+													"name": "string",
+													"nodeType": "ElementaryTypeName",
+													"src": "233:6:0",
+													"typeDescriptions": {
+														"typeIdentifier": "t_string_storage_ptr",
+														"typeString": "string"
+													}
+												},
+												"visibility": "internal"
+											}
+										],
+										"src": "232:15:0"
+									},
+									"scope": 10,
+									"src": "178:70:0",
+									"stateMutability": "view",
+									"virtual": false,
+									"visibility": "external"
+								}
+							],
+							"scope": 11,
+							"src": "101:149:0",
+							"usedErrors": [],
+							"usedEvents": []
+						}
+					],
+					"src": "32:219:0"
+				},
+				"id": 0
+			},
+			"contracts/api3/contracts/access-control-registry/interfaces/IAccessControlRegistryAdminnedWithManager.sol": {
+				"ast": {
+					"absolutePath": "contracts/api3/contracts/access-control-registry/interfaces/IAccessControlRegistryAdminnedWithManager.sol",
+					"exportedSymbols": {
+						"IAccessControlRegistryAdminned": [
+							10
+						],
+						"IAccessControlRegistryAdminnedWithManager": [
+							26
+						],
+						"IAccessControlRegistryUser": [
+							34
+						]
+					},
+					"id": 27,
+					"license": "MIT",
+					"nodeType": "SourceUnit",
+					"nodes": [
+						{
+							"id": 12,
+							"literals": [
+								"solidity",
+								"^",
+								"0.8",
+								".0"
+							],
+							"nodeType": "PragmaDirective",
+							"src": "32:23:1"
+						},
+						{
+							"absolutePath": "contracts/api3/contracts/access-control-registry/interfaces/IAccessControlRegistryAdminned.sol",
+							"file": "./IAccessControlRegistryAdminned.sol",
+							"id": 13,
+							"nameLocation": "-1:-1:-1",
+							"nodeType": "ImportDirective",
+							"scope": 27,
+							"sourceUnit": 11,
+							"src": "57:46:1",
+							"symbolAliases": [],
+							"unitAlias": ""
+						},
+						{
+							"abstract": false,
+							"baseContracts": [
+								{
+									"baseName": {
+										"id": 14,
+										"name": "IAccessControlRegistryAdminned",
+										"nameLocations": [
+											"164:30:1"
+										],
+										"nodeType": "IdentifierPath",
+										"referencedDeclaration": 10,
+										"src": "164:30:1"
+									},
+									"id": 15,
+									"nodeType": "InheritanceSpecifier",
+									"src": "164:30:1"
+								}
+							],
+							"canonicalName": "IAccessControlRegistryAdminnedWithManager",
+							"contractDependencies": [],
+							"contractKind": "interface",
+							"fullyImplemented": false,
+							"id": 26,
+							"linearizedBaseContracts": [
+								26,
+								10,
+								34
+							],
+							"name": "IAccessControlRegistryAdminnedWithManager",
+							"nameLocation": "115:41:1",
+							"nodeType": "ContractDefinition",
+							"nodes": [
+								{
+									"functionSelector": "481c6a75",
+									"id": 20,
+									"implemented": false,
+									"kind": "function",
+									"modifiers": [],
+									"name": "manager",
+									"nameLocation": "210:7:1",
+									"nodeType": "FunctionDefinition",
+									"parameters": {
+										"id": 16,
+										"nodeType": "ParameterList",
+										"parameters": [],
+										"src": "217:2:1"
+									},
+									"returnParameters": {
+										"id": 19,
+										"nodeType": "ParameterList",
+										"parameters": [
+											{
+												"constant": false,
+												"id": 18,
+												"mutability": "mutable",
+												"name": "",
+												"nameLocation": "-1:-1:-1",
+												"nodeType": "VariableDeclaration",
+												"scope": 20,
+												"src": "243:7:1",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_address",
+													"typeString": "address"
+												},
+												"typeName": {
+													"id": 17,
+													"name": "address",
+													"nodeType": "ElementaryTypeName",
+													"src": "243:7:1",
+													"stateMutability": "nonpayable",
+													"typeDescriptions": {
+														"typeIdentifier": "t_address",
+														"typeString": "address"
+													}
+												},
+												"visibility": "internal"
+											}
+										],
+										"src": "242:9:1"
+									},
+									"scope": 26,
+									"src": "201:51:1",
+									"stateMutability": "view",
+									"virtual": false,
+									"visibility": "external"
+								},
+								{
+									"functionSelector": "009f2f3c",
+									"id": 25,
+									"implemented": false,
+									"kind": "function",
+									"modifiers": [],
+									"name": "adminRole",
+									"nameLocation": "267:9:1",
+									"nodeType": "FunctionDefinition",
+									"parameters": {
+										"id": 21,
+										"nodeType": "ParameterList",
+										"parameters": [],
+										"src": "276:2:1"
+									},
+									"returnParameters": {
+										"id": 24,
+										"nodeType": "ParameterList",
+										"parameters": [
+											{
+												"constant": false,
+												"id": 23,
+												"mutability": "mutable",
+												"name": "",
+												"nameLocation": "-1:-1:-1",
+												"nodeType": "VariableDeclaration",
+												"scope": 25,
+												"src": "302:7:1",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_bytes32",
+													"typeString": "bytes32"
+												},
+												"typeName": {
+													"id": 22,
+													"name": "bytes32",
+													"nodeType": "ElementaryTypeName",
+													"src": "302:7:1",
+													"typeDescriptions": {
+														"typeIdentifier": "t_bytes32",
+														"typeString": "bytes32"
+													}
+												},
+												"visibility": "internal"
+											}
+										],
+										"src": "301:9:1"
+									},
+									"scope": 26,
+									"src": "258:53:1",
+									"stateMutability": "view",
+									"virtual": false,
+									"visibility": "external"
+								}
+							],
+							"scope": 27,
+							"src": "105:208:1",
+							"usedErrors": [],
+							"usedEvents": []
+						}
+					],
+					"src": "32:282:1"
+				},
+				"id": 1
+			},
+			"contracts/api3/contracts/access-control-registry/interfaces/IAccessControlRegistryUser.sol": {
+				"ast": {
+					"absolutePath": "contracts/api3/contracts/access-control-registry/interfaces/IAccessControlRegistryUser.sol",
+					"exportedSymbols": {
+						"IAccessControlRegistryUser": [
+							34
+						]
+					},
+					"id": 35,
+					"license": "MIT",
+					"nodeType": "SourceUnit",
+					"nodes": [
+						{
+							"id": 28,
+							"literals": [
+								"solidity",
+								"^",
+								"0.8",
+								".0"
+							],
+							"nodeType": "PragmaDirective",
+							"src": "32:23:2"
+						},
+						{
+							"abstract": false,
+							"baseContracts": [],
+							"canonicalName": "IAccessControlRegistryUser",
+							"contractDependencies": [],
+							"contractKind": "interface",
+							"fullyImplemented": false,
+							"id": 34,
+							"linearizedBaseContracts": [
+								34
+							],
+							"name": "IAccessControlRegistryUser",
+							"nameLocation": "67:26:2",
+							"nodeType": "ContractDefinition",
+							"nodes": [
+								{
+									"functionSelector": "1ce9ae07",
+									"id": 33,
+									"implemented": false,
+									"kind": "function",
+									"modifiers": [],
+									"name": "accessControlRegistry",
+									"nameLocation": "109:21:2",
+									"nodeType": "FunctionDefinition",
+									"parameters": {
+										"id": 29,
+										"nodeType": "ParameterList",
+										"parameters": [],
+										"src": "130:2:2"
+									},
+									"returnParameters": {
+										"id": 32,
+										"nodeType": "ParameterList",
+										"parameters": [
+											{
+												"constant": false,
+												"id": 31,
+												"mutability": "mutable",
+												"name": "",
+												"nameLocation": "-1:-1:-1",
+												"nodeType": "VariableDeclaration",
+												"scope": 33,
+												"src": "156:7:2",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_address",
+													"typeString": "address"
+												},
+												"typeName": {
+													"id": 30,
+													"name": "address",
+													"nodeType": "ElementaryTypeName",
+													"src": "156:7:2",
+													"stateMutability": "nonpayable",
+													"typeDescriptions": {
+														"typeIdentifier": "t_address",
+														"typeString": "address"
+													}
+												},
+												"visibility": "internal"
+											}
+										],
+										"src": "155:9:2"
+									},
+									"scope": 34,
+									"src": "100:65:2",
+									"stateMutability": "view",
+									"virtual": false,
+									"visibility": "external"
+								}
+							],
+							"scope": 35,
+							"src": "57:110:2",
+							"usedErrors": [],
+							"usedEvents": []
+						}
+					],
+					"src": "32:136:2"
+				},
+				"id": 2
+			},
+			"contracts/api3/contracts/authorizers/interfaces/IAuthorizerV0.sol": {
+				"ast": {
+					"absolutePath": "contracts/api3/contracts/authorizers/interfaces/IAuthorizerV0.sol",
+					"exportedSymbols": {
+						"IAuthorizerV0": [
+							52
+						]
+					},
+					"id": 53,
+					"license": "MIT",
+					"nodeType": "SourceUnit",
+					"nodes": [
+						{
+							"id": 36,
+							"literals": [
+								"solidity",
+								"^",
+								"0.8",
+								".20"
+							],
+							"nodeType": "PragmaDirective",
+							"src": "32:24:3"
+						},
+						{
+							"abstract": false,
+							"baseContracts": [],
+							"canonicalName": "IAuthorizerV0",
+							"contractDependencies": [],
+							"contractKind": "interface",
+							"fullyImplemented": false,
+							"id": 52,
+							"linearizedBaseContracts": [
+								52
+							],
+							"name": "IAuthorizerV0",
+							"nameLocation": "68:13:3",
+							"nodeType": "ContractDefinition",
+							"nodes": [
+								{
+									"functionSelector": "29b915b3",
+									"id": 51,
+									"implemented": false,
+									"kind": "function",
+									"modifiers": [],
+									"name": "isAuthorizedV0",
+									"nameLocation": "97:14:3",
+									"nodeType": "FunctionDefinition",
+									"parameters": {
+										"id": 47,
+										"nodeType": "ParameterList",
+										"parameters": [
+											{
+												"constant": false,
+												"id": 38,
+												"mutability": "mutable",
+												"name": "requestId",
+												"nameLocation": "129:9:3",
+												"nodeType": "VariableDeclaration",
+												"scope": 51,
+												"src": "121:17:3",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_bytes32",
+													"typeString": "bytes32"
+												},
+												"typeName": {
+													"id": 37,
+													"name": "bytes32",
+													"nodeType": "ElementaryTypeName",
+													"src": "121:7:3",
+													"typeDescriptions": {
+														"typeIdentifier": "t_bytes32",
+														"typeString": "bytes32"
+													}
+												},
+												"visibility": "internal"
+											},
+											{
+												"constant": false,
+												"id": 40,
+												"mutability": "mutable",
+												"name": "airnode",
+												"nameLocation": "156:7:3",
+												"nodeType": "VariableDeclaration",
+												"scope": 51,
+												"src": "148:15:3",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_address",
+													"typeString": "address"
+												},
+												"typeName": {
+													"id": 39,
+													"name": "address",
+													"nodeType": "ElementaryTypeName",
+													"src": "148:7:3",
+													"stateMutability": "nonpayable",
+													"typeDescriptions": {
+														"typeIdentifier": "t_address",
+														"typeString": "address"
+													}
+												},
+												"visibility": "internal"
+											},
+											{
+												"constant": false,
+												"id": 42,
+												"mutability": "mutable",
+												"name": "endpointId",
+												"nameLocation": "181:10:3",
+												"nodeType": "VariableDeclaration",
+												"scope": 51,
+												"src": "173:18:3",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_bytes32",
+													"typeString": "bytes32"
+												},
+												"typeName": {
+													"id": 41,
+													"name": "bytes32",
+													"nodeType": "ElementaryTypeName",
+													"src": "173:7:3",
+													"typeDescriptions": {
+														"typeIdentifier": "t_bytes32",
+														"typeString": "bytes32"
+													}
+												},
+												"visibility": "internal"
+											},
+											{
+												"constant": false,
+												"id": 44,
+												"mutability": "mutable",
+												"name": "sponsor",
+												"nameLocation": "209:7:3",
+												"nodeType": "VariableDeclaration",
+												"scope": 51,
+												"src": "201:15:3",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_address",
+													"typeString": "address"
+												},
+												"typeName": {
+													"id": 43,
+													"name": "address",
+													"nodeType": "ElementaryTypeName",
+													"src": "201:7:3",
+													"stateMutability": "nonpayable",
+													"typeDescriptions": {
+														"typeIdentifier": "t_address",
+														"typeString": "address"
+													}
+												},
+												"visibility": "internal"
+											},
+											{
+												"constant": false,
+												"id": 46,
+												"mutability": "mutable",
+												"name": "requester",
+												"nameLocation": "234:9:3",
+												"nodeType": "VariableDeclaration",
+												"scope": 51,
+												"src": "226:17:3",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_address",
+													"typeString": "address"
+												},
+												"typeName": {
+													"id": 45,
+													"name": "address",
+													"nodeType": "ElementaryTypeName",
+													"src": "226:7:3",
+													"stateMutability": "nonpayable",
+													"typeDescriptions": {
+														"typeIdentifier": "t_address",
+														"typeString": "address"
+													}
+												},
+												"visibility": "internal"
+											}
+										],
+										"src": "111:138:3"
+									},
+									"returnParameters": {
+										"id": 50,
+										"nodeType": "ParameterList",
+										"parameters": [
+											{
+												"constant": false,
+												"id": 49,
+												"mutability": "mutable",
+												"name": "",
+												"nameLocation": "-1:-1:-1",
+												"nodeType": "VariableDeclaration",
+												"scope": 51,
+												"src": "273:4:3",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_bool",
+													"typeString": "bool"
+												},
+												"typeName": {
+													"id": 48,
+													"name": "bool",
+													"nodeType": "ElementaryTypeName",
+													"src": "273:4:3",
+													"typeDescriptions": {
+														"typeIdentifier": "t_bool",
+														"typeString": "bool"
+													}
+												},
+												"visibility": "internal"
+											}
+										],
+										"src": "272:6:3"
+									},
+									"scope": 52,
+									"src": "88:191:3",
+									"stateMutability": "view",
+									"virtual": false,
+									"visibility": "external"
+								}
+							],
+							"scope": 53,
+							"src": "58:223:3",
+							"usedErrors": [],
+							"usedEvents": []
+						}
+					],
+					"src": "32:250:3"
+				},
+				"id": 3
+			},
+			"contracts/api3/contracts/authorizers/interfaces/IRequesterAuthorizer.sol": {
+				"ast": {
+					"absolutePath": "contracts/api3/contracts/authorizers/interfaces/IRequesterAuthorizer.sol",
+					"exportedSymbols": {
+						"IAuthorizerV0": [
+							52
+						],
+						"IRequesterAuthorizer": [
+							191
+						]
+					},
+					"id": 192,
+					"license": "MIT",
+					"nodeType": "SourceUnit",
+					"nodes": [
+						{
+							"id": 54,
+							"literals": [
+								"solidity",
+								"^",
+								"0.8",
+								".20"
+							],
+							"nodeType": "PragmaDirective",
+							"src": "32:24:4"
+						},
+						{
+							"absolutePath": "contracts/api3/contracts/authorizers/interfaces/IAuthorizerV0.sol",
+							"file": "./IAuthorizerV0.sol",
+							"id": 55,
+							"nameLocation": "-1:-1:-1",
+							"nodeType": "ImportDirective",
+							"scope": 192,
+							"sourceUnit": 53,
+							"src": "58:29:4",
+							"symbolAliases": [],
+							"unitAlias": ""
+						},
+						{
+							"abstract": false,
+							"baseContracts": [
+								{
+									"baseName": {
+										"id": 56,
+										"name": "IAuthorizerV0",
+										"nameLocations": [
+											"123:13:4"
+										],
+										"nodeType": "IdentifierPath",
+										"referencedDeclaration": 52,
+										"src": "123:13:4"
+									},
+									"id": 57,
+									"nodeType": "InheritanceSpecifier",
+									"src": "123:13:4"
+								}
+							],
+							"canonicalName": "IRequesterAuthorizer",
+							"contractDependencies": [],
+							"contractKind": "interface",
+							"fullyImplemented": false,
+							"id": 191,
+							"linearizedBaseContracts": [
+								191,
+								52
+							],
+							"name": "IRequesterAuthorizer",
+							"nameLocation": "99:20:4",
+							"nodeType": "ContractDefinition",
+							"nodes": [
+								{
+									"anonymous": false,
+									"eventSelector": "f9b174be67f83278d4516865d1b9ba4576b73e523ea0c2f124ea29152bb1b676",
+									"id": 69,
+									"name": "ExtendedWhitelistExpiration",
+									"nameLocation": "149:27:4",
+									"nodeType": "EventDefinition",
+									"parameters": {
+										"id": 68,
+										"nodeType": "ParameterList",
+										"parameters": [
+											{
+												"constant": false,
+												"id": 59,
+												"indexed": true,
+												"mutability": "mutable",
+												"name": "airnode",
+												"nameLocation": "202:7:4",
+												"nodeType": "VariableDeclaration",
+												"scope": 69,
+												"src": "186:23:4",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_address",
+													"typeString": "address"
+												},
+												"typeName": {
+													"id": 58,
+													"name": "address",
+													"nodeType": "ElementaryTypeName",
+													"src": "186:7:4",
+													"stateMutability": "nonpayable",
+													"typeDescriptions": {
+														"typeIdentifier": "t_address",
+														"typeString": "address"
+													}
+												},
+												"visibility": "internal"
+											},
+											{
+												"constant": false,
+												"id": 61,
+												"indexed": false,
+												"mutability": "mutable",
+												"name": "endpointId",
+												"nameLocation": "227:10:4",
+												"nodeType": "VariableDeclaration",
+												"scope": 69,
+												"src": "219:18:4",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_bytes32",
+													"typeString": "bytes32"
+												},
+												"typeName": {
+													"id": 60,
+													"name": "bytes32",
+													"nodeType": "ElementaryTypeName",
+													"src": "219:7:4",
+													"typeDescriptions": {
+														"typeIdentifier": "t_bytes32",
+														"typeString": "bytes32"
+													}
+												},
+												"visibility": "internal"
+											},
+											{
+												"constant": false,
+												"id": 63,
+												"indexed": true,
+												"mutability": "mutable",
+												"name": "requester",
+												"nameLocation": "263:9:4",
+												"nodeType": "VariableDeclaration",
+												"scope": 69,
+												"src": "247:25:4",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_address",
+													"typeString": "address"
+												},
+												"typeName": {
+													"id": 62,
+													"name": "address",
+													"nodeType": "ElementaryTypeName",
+													"src": "247:7:4",
+													"stateMutability": "nonpayable",
+													"typeDescriptions": {
+														"typeIdentifier": "t_address",
+														"typeString": "address"
+													}
+												},
+												"visibility": "internal"
+											},
+											{
+												"constant": false,
+												"id": 65,
+												"indexed": true,
+												"mutability": "mutable",
+												"name": "sender",
+												"nameLocation": "298:6:4",
+												"nodeType": "VariableDeclaration",
+												"scope": 69,
+												"src": "282:22:4",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_address",
+													"typeString": "address"
+												},
+												"typeName": {
+													"id": 64,
+													"name": "address",
+													"nodeType": "ElementaryTypeName",
+													"src": "282:7:4",
+													"stateMutability": "nonpayable",
+													"typeDescriptions": {
+														"typeIdentifier": "t_address",
+														"typeString": "address"
+													}
+												},
+												"visibility": "internal"
+											},
+											{
+												"constant": false,
+												"id": 67,
+												"indexed": false,
+												"mutability": "mutable",
+												"name": "expiration",
+												"nameLocation": "322:10:4",
+												"nodeType": "VariableDeclaration",
+												"scope": 69,
+												"src": "314:18:4",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_uint256",
+													"typeString": "uint256"
+												},
+												"typeName": {
+													"id": 66,
+													"name": "uint256",
+													"nodeType": "ElementaryTypeName",
+													"src": "314:7:4",
+													"typeDescriptions": {
+														"typeIdentifier": "t_uint256",
+														"typeString": "uint256"
+													}
+												},
+												"visibility": "internal"
+											}
+										],
+										"src": "176:162:4"
+									},
+									"src": "143:196:4"
+								},
+								{
+									"anonymous": false,
+									"eventSelector": "375ee45428e158031095010484fd6451af89c501c79d75e390da4e91eb480ce1",
+									"id": 81,
+									"name": "SetWhitelistExpiration",
+									"nameLocation": "351:22:4",
+									"nodeType": "EventDefinition",
+									"parameters": {
+										"id": 80,
+										"nodeType": "ParameterList",
+										"parameters": [
+											{
+												"constant": false,
+												"id": 71,
+												"indexed": true,
+												"mutability": "mutable",
+												"name": "airnode",
+												"nameLocation": "399:7:4",
+												"nodeType": "VariableDeclaration",
+												"scope": 81,
+												"src": "383:23:4",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_address",
+													"typeString": "address"
+												},
+												"typeName": {
+													"id": 70,
+													"name": "address",
+													"nodeType": "ElementaryTypeName",
+													"src": "383:7:4",
+													"stateMutability": "nonpayable",
+													"typeDescriptions": {
+														"typeIdentifier": "t_address",
+														"typeString": "address"
+													}
+												},
+												"visibility": "internal"
+											},
+											{
+												"constant": false,
+												"id": 73,
+												"indexed": false,
+												"mutability": "mutable",
+												"name": "endpointId",
+												"nameLocation": "424:10:4",
+												"nodeType": "VariableDeclaration",
+												"scope": 81,
+												"src": "416:18:4",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_bytes32",
+													"typeString": "bytes32"
+												},
+												"typeName": {
+													"id": 72,
+													"name": "bytes32",
+													"nodeType": "ElementaryTypeName",
+													"src": "416:7:4",
+													"typeDescriptions": {
+														"typeIdentifier": "t_bytes32",
+														"typeString": "bytes32"
+													}
+												},
+												"visibility": "internal"
+											},
+											{
+												"constant": false,
+												"id": 75,
+												"indexed": true,
+												"mutability": "mutable",
+												"name": "requester",
+												"nameLocation": "460:9:4",
+												"nodeType": "VariableDeclaration",
+												"scope": 81,
+												"src": "444:25:4",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_address",
+													"typeString": "address"
+												},
+												"typeName": {
+													"id": 74,
+													"name": "address",
+													"nodeType": "ElementaryTypeName",
+													"src": "444:7:4",
+													"stateMutability": "nonpayable",
+													"typeDescriptions": {
+														"typeIdentifier": "t_address",
+														"typeString": "address"
+													}
+												},
+												"visibility": "internal"
+											},
+											{
+												"constant": false,
+												"id": 77,
+												"indexed": true,
+												"mutability": "mutable",
+												"name": "sender",
+												"nameLocation": "495:6:4",
+												"nodeType": "VariableDeclaration",
+												"scope": 81,
+												"src": "479:22:4",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_address",
+													"typeString": "address"
+												},
+												"typeName": {
+													"id": 76,
+													"name": "address",
+													"nodeType": "ElementaryTypeName",
+													"src": "479:7:4",
+													"stateMutability": "nonpayable",
+													"typeDescriptions": {
+														"typeIdentifier": "t_address",
+														"typeString": "address"
+													}
+												},
+												"visibility": "internal"
+											},
+											{
+												"constant": false,
+												"id": 79,
+												"indexed": false,
+												"mutability": "mutable",
+												"name": "expiration",
+												"nameLocation": "519:10:4",
+												"nodeType": "VariableDeclaration",
+												"scope": 81,
+												"src": "511:18:4",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_uint256",
+													"typeString": "uint256"
+												},
+												"typeName": {
+													"id": 78,
+													"name": "uint256",
+													"nodeType": "ElementaryTypeName",
+													"src": "511:7:4",
+													"typeDescriptions": {
+														"typeIdentifier": "t_uint256",
+														"typeString": "uint256"
+													}
+												},
+												"visibility": "internal"
+											}
+										],
+										"src": "373:162:4"
+									},
+									"src": "345:191:4"
+								},
+								{
+									"anonymous": false,
+									"eventSelector": "13d4d6afcb6d196f753a522f275673066719bb13944bd021efd1fca4286df20d",
+									"id": 95,
+									"name": "SetIndefiniteWhitelistStatus",
+									"nameLocation": "548:28:4",
+									"nodeType": "EventDefinition",
+									"parameters": {
+										"id": 94,
+										"nodeType": "ParameterList",
+										"parameters": [
+											{
+												"constant": false,
+												"id": 83,
+												"indexed": true,
+												"mutability": "mutable",
+												"name": "airnode",
+												"nameLocation": "602:7:4",
+												"nodeType": "VariableDeclaration",
+												"scope": 95,
+												"src": "586:23:4",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_address",
+													"typeString": "address"
+												},
+												"typeName": {
+													"id": 82,
+													"name": "address",
+													"nodeType": "ElementaryTypeName",
+													"src": "586:7:4",
+													"stateMutability": "nonpayable",
+													"typeDescriptions": {
+														"typeIdentifier": "t_address",
+														"typeString": "address"
+													}
+												},
+												"visibility": "internal"
+											},
+											{
+												"constant": false,
+												"id": 85,
+												"indexed": false,
+												"mutability": "mutable",
+												"name": "endpointId",
+												"nameLocation": "627:10:4",
+												"nodeType": "VariableDeclaration",
+												"scope": 95,
+												"src": "619:18:4",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_bytes32",
+													"typeString": "bytes32"
+												},
+												"typeName": {
+													"id": 84,
+													"name": "bytes32",
+													"nodeType": "ElementaryTypeName",
+													"src": "619:7:4",
+													"typeDescriptions": {
+														"typeIdentifier": "t_bytes32",
+														"typeString": "bytes32"
+													}
+												},
+												"visibility": "internal"
+											},
+											{
+												"constant": false,
+												"id": 87,
+												"indexed": true,
+												"mutability": "mutable",
+												"name": "requester",
+												"nameLocation": "663:9:4",
+												"nodeType": "VariableDeclaration",
+												"scope": 95,
+												"src": "647:25:4",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_address",
+													"typeString": "address"
+												},
+												"typeName": {
+													"id": 86,
+													"name": "address",
+													"nodeType": "ElementaryTypeName",
+													"src": "647:7:4",
+													"stateMutability": "nonpayable",
+													"typeDescriptions": {
+														"typeIdentifier": "t_address",
+														"typeString": "address"
+													}
+												},
+												"visibility": "internal"
+											},
+											{
+												"constant": false,
+												"id": 89,
+												"indexed": true,
+												"mutability": "mutable",
+												"name": "sender",
+												"nameLocation": "698:6:4",
+												"nodeType": "VariableDeclaration",
+												"scope": 95,
+												"src": "682:22:4",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_address",
+													"typeString": "address"
+												},
+												"typeName": {
+													"id": 88,
+													"name": "address",
+													"nodeType": "ElementaryTypeName",
+													"src": "682:7:4",
+													"stateMutability": "nonpayable",
+													"typeDescriptions": {
+														"typeIdentifier": "t_address",
+														"typeString": "address"
+													}
+												},
+												"visibility": "internal"
+											},
+											{
+												"constant": false,
+												"id": 91,
+												"indexed": false,
+												"mutability": "mutable",
+												"name": "status",
+												"nameLocation": "719:6:4",
+												"nodeType": "VariableDeclaration",
+												"scope": 95,
+												"src": "714:11:4",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_bool",
+													"typeString": "bool"
+												},
+												"typeName": {
+													"id": 90,
+													"name": "bool",
+													"nodeType": "ElementaryTypeName",
+													"src": "714:4:4",
+													"typeDescriptions": {
+														"typeIdentifier": "t_bool",
+														"typeString": "bool"
+													}
+												},
+												"visibility": "internal"
+											},
+											{
+												"constant": false,
+												"id": 93,
+												"indexed": false,
+												"mutability": "mutable",
+												"name": "indefiniteWhitelistCount",
+												"nameLocation": "743:24:4",
+												"nodeType": "VariableDeclaration",
+												"scope": 95,
+												"src": "735:32:4",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_uint192",
+													"typeString": "uint192"
+												},
+												"typeName": {
+													"id": 92,
+													"name": "uint192",
+													"nodeType": "ElementaryTypeName",
+													"src": "735:7:4",
+													"typeDescriptions": {
+														"typeIdentifier": "t_uint192",
+														"typeString": "uint192"
+													}
+												},
+												"visibility": "internal"
+											}
+										],
+										"src": "576:197:4"
+									},
+									"src": "542:232:4"
+								},
+								{
+									"anonymous": false,
+									"eventSelector": "dca622020d204c36e9588e7be4184758283d992606ab73318776824b44e2859d",
+									"id": 109,
+									"name": "RevokedIndefiniteWhitelistStatus",
+									"nameLocation": "786:32:4",
+									"nodeType": "EventDefinition",
+									"parameters": {
+										"id": 108,
+										"nodeType": "ParameterList",
+										"parameters": [
+											{
+												"constant": false,
+												"id": 97,
+												"indexed": true,
+												"mutability": "mutable",
+												"name": "airnode",
+												"nameLocation": "844:7:4",
+												"nodeType": "VariableDeclaration",
+												"scope": 109,
+												"src": "828:23:4",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_address",
+													"typeString": "address"
+												},
+												"typeName": {
+													"id": 96,
+													"name": "address",
+													"nodeType": "ElementaryTypeName",
+													"src": "828:7:4",
+													"stateMutability": "nonpayable",
+													"typeDescriptions": {
+														"typeIdentifier": "t_address",
+														"typeString": "address"
+													}
+												},
+												"visibility": "internal"
+											},
+											{
+												"constant": false,
+												"id": 99,
+												"indexed": false,
+												"mutability": "mutable",
+												"name": "endpointId",
+												"nameLocation": "869:10:4",
+												"nodeType": "VariableDeclaration",
+												"scope": 109,
+												"src": "861:18:4",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_bytes32",
+													"typeString": "bytes32"
+												},
+												"typeName": {
+													"id": 98,
+													"name": "bytes32",
+													"nodeType": "ElementaryTypeName",
+													"src": "861:7:4",
+													"typeDescriptions": {
+														"typeIdentifier": "t_bytes32",
+														"typeString": "bytes32"
+													}
+												},
+												"visibility": "internal"
+											},
+											{
+												"constant": false,
+												"id": 101,
+												"indexed": true,
+												"mutability": "mutable",
+												"name": "requester",
+												"nameLocation": "905:9:4",
+												"nodeType": "VariableDeclaration",
+												"scope": 109,
+												"src": "889:25:4",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_address",
+													"typeString": "address"
+												},
+												"typeName": {
+													"id": 100,
+													"name": "address",
+													"nodeType": "ElementaryTypeName",
+													"src": "889:7:4",
+													"stateMutability": "nonpayable",
+													"typeDescriptions": {
+														"typeIdentifier": "t_address",
+														"typeString": "address"
+													}
+												},
+												"visibility": "internal"
+											},
+											{
+												"constant": false,
+												"id": 103,
+												"indexed": true,
+												"mutability": "mutable",
+												"name": "setter",
+												"nameLocation": "940:6:4",
+												"nodeType": "VariableDeclaration",
+												"scope": 109,
+												"src": "924:22:4",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_address",
+													"typeString": "address"
+												},
+												"typeName": {
+													"id": 102,
+													"name": "address",
+													"nodeType": "ElementaryTypeName",
+													"src": "924:7:4",
+													"stateMutability": "nonpayable",
+													"typeDescriptions": {
+														"typeIdentifier": "t_address",
+														"typeString": "address"
+													}
+												},
+												"visibility": "internal"
+											},
+											{
+												"constant": false,
+												"id": 105,
+												"indexed": false,
+												"mutability": "mutable",
+												"name": "sender",
+												"nameLocation": "964:6:4",
+												"nodeType": "VariableDeclaration",
+												"scope": 109,
+												"src": "956:14:4",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_address",
+													"typeString": "address"
+												},
+												"typeName": {
+													"id": 104,
+													"name": "address",
+													"nodeType": "ElementaryTypeName",
+													"src": "956:7:4",
+													"stateMutability": "nonpayable",
+													"typeDescriptions": {
+														"typeIdentifier": "t_address",
+														"typeString": "address"
+													}
+												},
+												"visibility": "internal"
+											},
+											{
+												"constant": false,
+												"id": 107,
+												"indexed": false,
+												"mutability": "mutable",
+												"name": "indefiniteWhitelistCount",
+												"nameLocation": "988:24:4",
+												"nodeType": "VariableDeclaration",
+												"scope": 109,
+												"src": "980:32:4",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_uint192",
+													"typeString": "uint192"
+												},
+												"typeName": {
+													"id": 106,
+													"name": "uint192",
+													"nodeType": "ElementaryTypeName",
+													"src": "980:7:4",
+													"typeDescriptions": {
+														"typeIdentifier": "t_uint192",
+														"typeString": "uint192"
+													}
+												},
+												"visibility": "internal"
+											}
+										],
+										"src": "818:200:4"
+									},
+									"src": "780:239:4"
+								},
+								{
+									"functionSelector": "73c0627e",
+									"id": 120,
+									"implemented": false,
+									"kind": "function",
+									"modifiers": [],
+									"name": "extendWhitelistExpiration",
+									"nameLocation": "1034:25:4",
+									"nodeType": "FunctionDefinition",
+									"parameters": {
+										"id": 118,
+										"nodeType": "ParameterList",
+										"parameters": [
+											{
+												"constant": false,
+												"id": 111,
+												"mutability": "mutable",
+												"name": "airnode",
+												"nameLocation": "1077:7:4",
+												"nodeType": "VariableDeclaration",
+												"scope": 120,
+												"src": "1069:15:4",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_address",
+													"typeString": "address"
+												},
+												"typeName": {
+													"id": 110,
+													"name": "address",
+													"nodeType": "ElementaryTypeName",
+													"src": "1069:7:4",
+													"stateMutability": "nonpayable",
+													"typeDescriptions": {
+														"typeIdentifier": "t_address",
+														"typeString": "address"
+													}
+												},
+												"visibility": "internal"
+											},
+											{
+												"constant": false,
+												"id": 113,
+												"mutability": "mutable",
+												"name": "endpointId",
+												"nameLocation": "1102:10:4",
+												"nodeType": "VariableDeclaration",
+												"scope": 120,
+												"src": "1094:18:4",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_bytes32",
+													"typeString": "bytes32"
+												},
+												"typeName": {
+													"id": 112,
+													"name": "bytes32",
+													"nodeType": "ElementaryTypeName",
+													"src": "1094:7:4",
+													"typeDescriptions": {
+														"typeIdentifier": "t_bytes32",
+														"typeString": "bytes32"
+													}
+												},
+												"visibility": "internal"
+											},
+											{
+												"constant": false,
+												"id": 115,
+												"mutability": "mutable",
+												"name": "requester",
+												"nameLocation": "1130:9:4",
+												"nodeType": "VariableDeclaration",
+												"scope": 120,
+												"src": "1122:17:4",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_address",
+													"typeString": "address"
+												},
+												"typeName": {
+													"id": 114,
+													"name": "address",
+													"nodeType": "ElementaryTypeName",
+													"src": "1122:7:4",
+													"stateMutability": "nonpayable",
+													"typeDescriptions": {
+														"typeIdentifier": "t_address",
+														"typeString": "address"
+													}
+												},
+												"visibility": "internal"
+											},
+											{
+												"constant": false,
+												"id": 117,
+												"mutability": "mutable",
+												"name": "expirationTimestamp",
+												"nameLocation": "1156:19:4",
+												"nodeType": "VariableDeclaration",
+												"scope": 120,
+												"src": "1149:26:4",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_uint64",
+													"typeString": "uint64"
+												},
+												"typeName": {
+													"id": 116,
+													"name": "uint64",
+													"nodeType": "ElementaryTypeName",
+													"src": "1149:6:4",
+													"typeDescriptions": {
+														"typeIdentifier": "t_uint64",
+														"typeString": "uint64"
+													}
+												},
+												"visibility": "internal"
+											}
+										],
+										"src": "1059:122:4"
+									},
+									"returnParameters": {
+										"id": 119,
+										"nodeType": "ParameterList",
+										"parameters": [],
+										"src": "1190:0:4"
+									},
+									"scope": 191,
+									"src": "1025:166:4",
+									"stateMutability": "nonpayable",
+									"virtual": false,
+									"visibility": "external"
+								},
+								{
+									"functionSelector": "4751c2e2",
+									"id": 131,
+									"implemented": false,
+									"kind": "function",
+									"modifiers": [],
+									"name": "setWhitelistExpiration",
+									"nameLocation": "1206:22:4",
+									"nodeType": "FunctionDefinition",
+									"parameters": {
+										"id": 129,
+										"nodeType": "ParameterList",
+										"parameters": [
+											{
+												"constant": false,
+												"id": 122,
+												"mutability": "mutable",
+												"name": "airnode",
+												"nameLocation": "1246:7:4",
+												"nodeType": "VariableDeclaration",
+												"scope": 131,
+												"src": "1238:15:4",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_address",
+													"typeString": "address"
+												},
+												"typeName": {
+													"id": 121,
+													"name": "address",
+													"nodeType": "ElementaryTypeName",
+													"src": "1238:7:4",
+													"stateMutability": "nonpayable",
+													"typeDescriptions": {
+														"typeIdentifier": "t_address",
+														"typeString": "address"
+													}
+												},
+												"visibility": "internal"
+											},
+											{
+												"constant": false,
+												"id": 124,
+												"mutability": "mutable",
+												"name": "endpointId",
+												"nameLocation": "1271:10:4",
+												"nodeType": "VariableDeclaration",
+												"scope": 131,
+												"src": "1263:18:4",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_bytes32",
+													"typeString": "bytes32"
+												},
+												"typeName": {
+													"id": 123,
+													"name": "bytes32",
+													"nodeType": "ElementaryTypeName",
+													"src": "1263:7:4",
+													"typeDescriptions": {
+														"typeIdentifier": "t_bytes32",
+														"typeString": "bytes32"
+													}
+												},
+												"visibility": "internal"
+											},
+											{
+												"constant": false,
+												"id": 126,
+												"mutability": "mutable",
+												"name": "requester",
+												"nameLocation": "1299:9:4",
+												"nodeType": "VariableDeclaration",
+												"scope": 131,
+												"src": "1291:17:4",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_address",
+													"typeString": "address"
+												},
+												"typeName": {
+													"id": 125,
+													"name": "address",
+													"nodeType": "ElementaryTypeName",
+													"src": "1291:7:4",
+													"stateMutability": "nonpayable",
+													"typeDescriptions": {
+														"typeIdentifier": "t_address",
+														"typeString": "address"
+													}
+												},
+												"visibility": "internal"
+											},
+											{
+												"constant": false,
+												"id": 128,
+												"mutability": "mutable",
+												"name": "expirationTimestamp",
+												"nameLocation": "1325:19:4",
+												"nodeType": "VariableDeclaration",
+												"scope": 131,
+												"src": "1318:26:4",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_uint64",
+													"typeString": "uint64"
+												},
+												"typeName": {
+													"id": 127,
+													"name": "uint64",
+													"nodeType": "ElementaryTypeName",
+													"src": "1318:6:4",
+													"typeDescriptions": {
+														"typeIdentifier": "t_uint64",
+														"typeString": "uint64"
+													}
+												},
+												"visibility": "internal"
+											}
+										],
+										"src": "1228:122:4"
+									},
+									"returnParameters": {
+										"id": 130,
+										"nodeType": "ParameterList",
+										"parameters": [],
+										"src": "1359:0:4"
+									},
+									"scope": 191,
+									"src": "1197:163:4",
+									"stateMutability": "nonpayable",
+									"virtual": false,
+									"visibility": "external"
+								},
+								{
+									"functionSelector": "43b64962",
+									"id": 142,
+									"implemented": false,
+									"kind": "function",
+									"modifiers": [],
+									"name": "setIndefiniteWhitelistStatus",
+									"nameLocation": "1375:28:4",
+									"nodeType": "FunctionDefinition",
+									"parameters": {
+										"id": 140,
+										"nodeType": "ParameterList",
+										"parameters": [
+											{
+												"constant": false,
+												"id": 133,
+												"mutability": "mutable",
+												"name": "airnode",
+												"nameLocation": "1421:7:4",
+												"nodeType": "VariableDeclaration",
+												"scope": 142,
+												"src": "1413:15:4",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_address",
+													"typeString": "address"
+												},
+												"typeName": {
+													"id": 132,
+													"name": "address",
+													"nodeType": "ElementaryTypeName",
+													"src": "1413:7:4",
+													"stateMutability": "nonpayable",
+													"typeDescriptions": {
+														"typeIdentifier": "t_address",
+														"typeString": "address"
+													}
+												},
+												"visibility": "internal"
+											},
+											{
+												"constant": false,
+												"id": 135,
+												"mutability": "mutable",
+												"name": "endpointId",
+												"nameLocation": "1446:10:4",
+												"nodeType": "VariableDeclaration",
+												"scope": 142,
+												"src": "1438:18:4",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_bytes32",
+													"typeString": "bytes32"
+												},
+												"typeName": {
+													"id": 134,
+													"name": "bytes32",
+													"nodeType": "ElementaryTypeName",
+													"src": "1438:7:4",
+													"typeDescriptions": {
+														"typeIdentifier": "t_bytes32",
+														"typeString": "bytes32"
+													}
+												},
+												"visibility": "internal"
+											},
+											{
+												"constant": false,
+												"id": 137,
+												"mutability": "mutable",
+												"name": "requester",
+												"nameLocation": "1474:9:4",
+												"nodeType": "VariableDeclaration",
+												"scope": 142,
+												"src": "1466:17:4",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_address",
+													"typeString": "address"
+												},
+												"typeName": {
+													"id": 136,
+													"name": "address",
+													"nodeType": "ElementaryTypeName",
+													"src": "1466:7:4",
+													"stateMutability": "nonpayable",
+													"typeDescriptions": {
+														"typeIdentifier": "t_address",
+														"typeString": "address"
+													}
+												},
+												"visibility": "internal"
+											},
+											{
+												"constant": false,
+												"id": 139,
+												"mutability": "mutable",
+												"name": "status",
+												"nameLocation": "1498:6:4",
+												"nodeType": "VariableDeclaration",
+												"scope": 142,
+												"src": "1493:11:4",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_bool",
+													"typeString": "bool"
+												},
+												"typeName": {
+													"id": 138,
+													"name": "bool",
+													"nodeType": "ElementaryTypeName",
+													"src": "1493:4:4",
+													"typeDescriptions": {
+														"typeIdentifier": "t_bool",
+														"typeString": "bool"
+													}
+												},
+												"visibility": "internal"
+											}
+										],
+										"src": "1403:107:4"
+									},
+									"returnParameters": {
+										"id": 141,
+										"nodeType": "ParameterList",
+										"parameters": [],
+										"src": "1519:0:4"
+									},
+									"scope": 191,
+									"src": "1366:154:4",
+									"stateMutability": "nonpayable",
+									"virtual": false,
+									"visibility": "external"
+								},
+								{
+									"functionSelector": "7e766bc1",
+									"id": 153,
+									"implemented": false,
+									"kind": "function",
+									"modifiers": [],
+									"name": "revokeIndefiniteWhitelistStatus",
+									"nameLocation": "1535:31:4",
+									"nodeType": "FunctionDefinition",
+									"parameters": {
+										"id": 151,
+										"nodeType": "ParameterList",
+										"parameters": [
+											{
+												"constant": false,
+												"id": 144,
+												"mutability": "mutable",
+												"name": "airnode",
+												"nameLocation": "1584:7:4",
+												"nodeType": "VariableDeclaration",
+												"scope": 153,
+												"src": "1576:15:4",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_address",
+													"typeString": "address"
+												},
+												"typeName": {
+													"id": 143,
+													"name": "address",
+													"nodeType": "ElementaryTypeName",
+													"src": "1576:7:4",
+													"stateMutability": "nonpayable",
+													"typeDescriptions": {
+														"typeIdentifier": "t_address",
+														"typeString": "address"
+													}
+												},
+												"visibility": "internal"
+											},
+											{
+												"constant": false,
+												"id": 146,
+												"mutability": "mutable",
+												"name": "endpointId",
+												"nameLocation": "1609:10:4",
+												"nodeType": "VariableDeclaration",
+												"scope": 153,
+												"src": "1601:18:4",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_bytes32",
+													"typeString": "bytes32"
+												},
+												"typeName": {
+													"id": 145,
+													"name": "bytes32",
+													"nodeType": "ElementaryTypeName",
+													"src": "1601:7:4",
+													"typeDescriptions": {
+														"typeIdentifier": "t_bytes32",
+														"typeString": "bytes32"
+													}
+												},
+												"visibility": "internal"
+											},
+											{
+												"constant": false,
+												"id": 148,
+												"mutability": "mutable",
+												"name": "requester",
+												"nameLocation": "1637:9:4",
+												"nodeType": "VariableDeclaration",
+												"scope": 153,
+												"src": "1629:17:4",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_address",
+													"typeString": "address"
+												},
+												"typeName": {
+													"id": 147,
+													"name": "address",
+													"nodeType": "ElementaryTypeName",
+													"src": "1629:7:4",
+													"stateMutability": "nonpayable",
+													"typeDescriptions": {
+														"typeIdentifier": "t_address",
+														"typeString": "address"
+													}
+												},
+												"visibility": "internal"
+											},
+											{
+												"constant": false,
+												"id": 150,
+												"mutability": "mutable",
+												"name": "setter",
+												"nameLocation": "1664:6:4",
+												"nodeType": "VariableDeclaration",
+												"scope": 153,
+												"src": "1656:14:4",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_address",
+													"typeString": "address"
+												},
+												"typeName": {
+													"id": 149,
+													"name": "address",
+													"nodeType": "ElementaryTypeName",
+													"src": "1656:7:4",
+													"stateMutability": "nonpayable",
+													"typeDescriptions": {
+														"typeIdentifier": "t_address",
+														"typeString": "address"
+													}
+												},
+												"visibility": "internal"
+											}
+										],
+										"src": "1566:110:4"
+									},
+									"returnParameters": {
+										"id": 152,
+										"nodeType": "ParameterList",
+										"parameters": [],
+										"src": "1685:0:4"
+									},
+									"scope": 191,
+									"src": "1526:160:4",
+									"stateMutability": "nonpayable",
+									"virtual": false,
+									"visibility": "external"
+								},
+								{
+									"functionSelector": "82d229e3",
+									"id": 166,
+									"implemented": false,
+									"kind": "function",
+									"modifiers": [],
+									"name": "airnodeToEndpointIdToRequesterToWhitelistStatus",
+									"nameLocation": "1701:47:4",
+									"nodeType": "FunctionDefinition",
+									"parameters": {
+										"id": 160,
+										"nodeType": "ParameterList",
+										"parameters": [
+											{
+												"constant": false,
+												"id": 155,
+												"mutability": "mutable",
+												"name": "airnode",
+												"nameLocation": "1766:7:4",
+												"nodeType": "VariableDeclaration",
+												"scope": 166,
+												"src": "1758:15:4",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_address",
+													"typeString": "address"
+												},
+												"typeName": {
+													"id": 154,
+													"name": "address",
+													"nodeType": "ElementaryTypeName",
+													"src": "1758:7:4",
+													"stateMutability": "nonpayable",
+													"typeDescriptions": {
+														"typeIdentifier": "t_address",
+														"typeString": "address"
+													}
+												},
+												"visibility": "internal"
+											},
+											{
+												"constant": false,
+												"id": 157,
+												"mutability": "mutable",
+												"name": "endpointId",
+												"nameLocation": "1791:10:4",
+												"nodeType": "VariableDeclaration",
+												"scope": 166,
+												"src": "1783:18:4",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_bytes32",
+													"typeString": "bytes32"
+												},
+												"typeName": {
+													"id": 156,
+													"name": "bytes32",
+													"nodeType": "ElementaryTypeName",
+													"src": "1783:7:4",
+													"typeDescriptions": {
+														"typeIdentifier": "t_bytes32",
+														"typeString": "bytes32"
+													}
+												},
+												"visibility": "internal"
+											},
+											{
+												"constant": false,
+												"id": 159,
+												"mutability": "mutable",
+												"name": "requester",
+												"nameLocation": "1819:9:4",
+												"nodeType": "VariableDeclaration",
+												"scope": 166,
+												"src": "1811:17:4",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_address",
+													"typeString": "address"
+												},
+												"typeName": {
+													"id": 158,
+													"name": "address",
+													"nodeType": "ElementaryTypeName",
+													"src": "1811:7:4",
+													"stateMutability": "nonpayable",
+													"typeDescriptions": {
+														"typeIdentifier": "t_address",
+														"typeString": "address"
+													}
+												},
+												"visibility": "internal"
+											}
+										],
+										"src": "1748:86:4"
+									},
+									"returnParameters": {
+										"id": 165,
+										"nodeType": "ParameterList",
+										"parameters": [
+											{
+												"constant": false,
+												"id": 162,
+												"mutability": "mutable",
+												"name": "expirationTimestamp",
+												"nameLocation": "1889:19:4",
+												"nodeType": "VariableDeclaration",
+												"scope": 166,
+												"src": "1882:26:4",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_uint64",
+													"typeString": "uint64"
+												},
+												"typeName": {
+													"id": 161,
+													"name": "uint64",
+													"nodeType": "ElementaryTypeName",
+													"src": "1882:6:4",
+													"typeDescriptions": {
+														"typeIdentifier": "t_uint64",
+														"typeString": "uint64"
+													}
+												},
+												"visibility": "internal"
+											},
+											{
+												"constant": false,
+												"id": 164,
+												"mutability": "mutable",
+												"name": "indefiniteWhitelistCount",
+												"nameLocation": "1918:24:4",
+												"nodeType": "VariableDeclaration",
+												"scope": 166,
+												"src": "1910:32:4",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_uint192",
+													"typeString": "uint192"
+												},
+												"typeName": {
+													"id": 163,
+													"name": "uint192",
+													"nodeType": "ElementaryTypeName",
+													"src": "1910:7:4",
+													"typeDescriptions": {
+														"typeIdentifier": "t_uint192",
+														"typeString": "uint192"
+													}
+												},
+												"visibility": "internal"
+											}
+										],
+										"src": "1881:62:4"
+									},
+									"scope": 191,
+									"src": "1692:252:4",
+									"stateMutability": "view",
+									"virtual": false,
+									"visibility": "external"
+								},
+								{
+									"functionSelector": "216de27e",
+									"id": 179,
+									"implemented": false,
+									"kind": "function",
+									"modifiers": [],
+									"name": "airnodeToEndpointIdToRequesterToSetterToIndefiniteWhitelistStatus",
+									"nameLocation": "1959:65:4",
+									"nodeType": "FunctionDefinition",
+									"parameters": {
+										"id": 175,
+										"nodeType": "ParameterList",
+										"parameters": [
+											{
+												"constant": false,
+												"id": 168,
+												"mutability": "mutable",
+												"name": "airnode",
+												"nameLocation": "2042:7:4",
+												"nodeType": "VariableDeclaration",
+												"scope": 179,
+												"src": "2034:15:4",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_address",
+													"typeString": "address"
+												},
+												"typeName": {
+													"id": 167,
+													"name": "address",
+													"nodeType": "ElementaryTypeName",
+													"src": "2034:7:4",
+													"stateMutability": "nonpayable",
+													"typeDescriptions": {
+														"typeIdentifier": "t_address",
+														"typeString": "address"
+													}
+												},
+												"visibility": "internal"
+											},
+											{
+												"constant": false,
+												"id": 170,
+												"mutability": "mutable",
+												"name": "endpointId",
+												"nameLocation": "2067:10:4",
+												"nodeType": "VariableDeclaration",
+												"scope": 179,
+												"src": "2059:18:4",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_bytes32",
+													"typeString": "bytes32"
+												},
+												"typeName": {
+													"id": 169,
+													"name": "bytes32",
+													"nodeType": "ElementaryTypeName",
+													"src": "2059:7:4",
+													"typeDescriptions": {
+														"typeIdentifier": "t_bytes32",
+														"typeString": "bytes32"
+													}
+												},
+												"visibility": "internal"
+											},
+											{
+												"constant": false,
+												"id": 172,
+												"mutability": "mutable",
+												"name": "requester",
+												"nameLocation": "2095:9:4",
+												"nodeType": "VariableDeclaration",
+												"scope": 179,
+												"src": "2087:17:4",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_address",
+													"typeString": "address"
+												},
+												"typeName": {
+													"id": 171,
+													"name": "address",
+													"nodeType": "ElementaryTypeName",
+													"src": "2087:7:4",
+													"stateMutability": "nonpayable",
+													"typeDescriptions": {
+														"typeIdentifier": "t_address",
+														"typeString": "address"
+													}
+												},
+												"visibility": "internal"
+											},
+											{
+												"constant": false,
+												"id": 174,
+												"mutability": "mutable",
+												"name": "setter",
+												"nameLocation": "2122:6:4",
+												"nodeType": "VariableDeclaration",
+												"scope": 179,
+												"src": "2114:14:4",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_address",
+													"typeString": "address"
+												},
+												"typeName": {
+													"id": 173,
+													"name": "address",
+													"nodeType": "ElementaryTypeName",
+													"src": "2114:7:4",
+													"stateMutability": "nonpayable",
+													"typeDescriptions": {
+														"typeIdentifier": "t_address",
+														"typeString": "address"
+													}
+												},
+												"visibility": "internal"
+											}
+										],
+										"src": "2024:110:4"
+									},
+									"returnParameters": {
+										"id": 178,
+										"nodeType": "ParameterList",
+										"parameters": [
+											{
+												"constant": false,
+												"id": 177,
+												"mutability": "mutable",
+												"name": "indefiniteWhitelistStatus",
+												"nameLocation": "2163:25:4",
+												"nodeType": "VariableDeclaration",
+												"scope": 179,
+												"src": "2158:30:4",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_bool",
+													"typeString": "bool"
+												},
+												"typeName": {
+													"id": 176,
+													"name": "bool",
+													"nodeType": "ElementaryTypeName",
+													"src": "2158:4:4",
+													"typeDescriptions": {
+														"typeIdentifier": "t_bool",
+														"typeString": "bool"
+													}
+												},
+												"visibility": "internal"
+											}
+										],
+										"src": "2157:32:4"
+									},
+									"scope": 191,
+									"src": "1950:240:4",
+									"stateMutability": "view",
+									"virtual": false,
+									"visibility": "external"
+								},
+								{
+									"functionSelector": "f57a044a",
+									"id": 190,
+									"implemented": false,
+									"kind": "function",
+									"modifiers": [],
+									"name": "isAuthorized",
+									"nameLocation": "2205:12:4",
+									"nodeType": "FunctionDefinition",
+									"parameters": {
+										"id": 186,
+										"nodeType": "ParameterList",
+										"parameters": [
+											{
+												"constant": false,
+												"id": 181,
+												"mutability": "mutable",
+												"name": "airnode",
+												"nameLocation": "2235:7:4",
+												"nodeType": "VariableDeclaration",
+												"scope": 190,
+												"src": "2227:15:4",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_address",
+													"typeString": "address"
+												},
+												"typeName": {
+													"id": 180,
+													"name": "address",
+													"nodeType": "ElementaryTypeName",
+													"src": "2227:7:4",
+													"stateMutability": "nonpayable",
+													"typeDescriptions": {
+														"typeIdentifier": "t_address",
+														"typeString": "address"
+													}
+												},
+												"visibility": "internal"
+											},
+											{
+												"constant": false,
+												"id": 183,
+												"mutability": "mutable",
+												"name": "endpointId",
+												"nameLocation": "2260:10:4",
+												"nodeType": "VariableDeclaration",
+												"scope": 190,
+												"src": "2252:18:4",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_bytes32",
+													"typeString": "bytes32"
+												},
+												"typeName": {
+													"id": 182,
+													"name": "bytes32",
+													"nodeType": "ElementaryTypeName",
+													"src": "2252:7:4",
+													"typeDescriptions": {
+														"typeIdentifier": "t_bytes32",
+														"typeString": "bytes32"
+													}
+												},
+												"visibility": "internal"
+											},
+											{
+												"constant": false,
+												"id": 185,
+												"mutability": "mutable",
+												"name": "requester",
+												"nameLocation": "2288:9:4",
+												"nodeType": "VariableDeclaration",
+												"scope": 190,
+												"src": "2280:17:4",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_address",
+													"typeString": "address"
+												},
+												"typeName": {
+													"id": 184,
+													"name": "address",
+													"nodeType": "ElementaryTypeName",
+													"src": "2280:7:4",
+													"stateMutability": "nonpayable",
+													"typeDescriptions": {
+														"typeIdentifier": "t_address",
+														"typeString": "address"
+													}
+												},
+												"visibility": "internal"
+											}
+										],
+										"src": "2217:86:4"
+									},
+									"returnParameters": {
+										"id": 189,
+										"nodeType": "ParameterList",
+										"parameters": [
+											{
+												"constant": false,
+												"id": 188,
+												"mutability": "mutable",
+												"name": "",
+												"nameLocation": "-1:-1:-1",
+												"nodeType": "VariableDeclaration",
+												"scope": 190,
+												"src": "2327:4:4",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_bool",
+													"typeString": "bool"
+												},
+												"typeName": {
+													"id": 187,
+													"name": "bool",
+													"nodeType": "ElementaryTypeName",
+													"src": "2327:4:4",
+													"typeDescriptions": {
+														"typeIdentifier": "t_bool",
+														"typeString": "bool"
+													}
+												},
+												"visibility": "internal"
+											}
+										],
+										"src": "2326:6:4"
+									},
+									"scope": 191,
+									"src": "2196:137:4",
+									"stateMutability": "view",
+									"virtual": false,
+									"visibility": "external"
+								}
+							],
+							"scope": 192,
+							"src": "89:2246:4",
+							"usedErrors": [],
+							"usedEvents": [
+								69,
+								81,
+								95,
+								109
+							]
+						}
+					],
+					"src": "32:2304:4"
+				},
+				"id": 4
+			},
+			"contracts/api3/contracts/authorizers/interfaces/IRequesterAuthorizerWithManager.sol": {
+				"ast": {
+					"absolutePath": "contracts/api3/contracts/authorizers/interfaces/IRequesterAuthorizerWithManager.sol",
+					"exportedSymbols": {
+						"IAccessControlRegistryAdminned": [
+							10
+						],
+						"IAccessControlRegistryAdminnedWithManager": [
+							26
+						],
+						"IAccessControlRegistryUser": [
+							34
+						],
+						"IAuthorizerV0": [
+							52
+						],
+						"IRequesterAuthorizer": [
+							191
+						],
+						"IRequesterAuthorizerWithManager": [
+							200
+						],
+						"IWhitelistRoles": [
+							218
+						],
+						"IWhitelistRolesWithManager": [
+							242
+						]
+					},
+					"id": 201,
+					"license": "MIT",
+					"nodeType": "SourceUnit",
+					"nodes": [
+						{
+							"id": 193,
+							"literals": [
+								"solidity",
+								"^",
+								"0.8",
+								".20"
+							],
+							"nodeType": "PragmaDirective",
+							"src": "32:24:5"
+						},
+						{
+							"absolutePath": "contracts/api3/contracts/whitelist/interfaces/IWhitelistRolesWithManager.sol",
+							"file": "../../whitelist/interfaces/IWhitelistRolesWithManager.sol",
+							"id": 194,
+							"nameLocation": "-1:-1:-1",
+							"nodeType": "ImportDirective",
+							"scope": 201,
+							"sourceUnit": 243,
+							"src": "58:67:5",
+							"symbolAliases": [],
+							"unitAlias": ""
+						},
+						{
+							"absolutePath": "contracts/api3/contracts/authorizers/interfaces/IRequesterAuthorizer.sol",
+							"file": "./IRequesterAuthorizer.sol",
+							"id": 195,
+							"nameLocation": "-1:-1:-1",
+							"nodeType": "ImportDirective",
+							"scope": 201,
+							"sourceUnit": 192,
+							"src": "126:36:5",
+							"symbolAliases": [],
+							"unitAlias": ""
+						},
+						{
+							"abstract": false,
+							"baseContracts": [
+								{
+									"baseName": {
+										"id": 196,
+										"name": "IWhitelistRolesWithManager",
+										"nameLocations": [
+											"213:26:5"
+										],
+										"nodeType": "IdentifierPath",
+										"referencedDeclaration": 242,
+										"src": "213:26:5"
+									},
+									"id": 197,
+									"nodeType": "InheritanceSpecifier",
+									"src": "213:26:5"
+								},
+								{
+									"baseName": {
+										"id": 198,
+										"name": "IRequesterAuthorizer",
+										"nameLocations": [
+											"245:20:5"
+										],
+										"nodeType": "IdentifierPath",
+										"referencedDeclaration": 191,
+										"src": "245:20:5"
+									},
+									"id": 199,
+									"nodeType": "InheritanceSpecifier",
+									"src": "245:20:5"
+								}
+							],
+							"canonicalName": "IRequesterAuthorizerWithManager",
+							"contractDependencies": [],
+							"contractKind": "interface",
+							"fullyImplemented": false,
+							"id": 200,
+							"linearizedBaseContracts": [
+								200,
+								191,
+								52,
+								242,
+								26,
+								10,
+								34,
+								218
+							],
+							"name": "IRequesterAuthorizerWithManager",
+							"nameLocation": "174:31:5",
+							"nodeType": "ContractDefinition",
+							"nodes": [],
+							"scope": 201,
+							"src": "164:104:5",
+							"usedErrors": [],
+							"usedEvents": [
+								69,
+								81,
+								95,
+								109
+							]
+						}
+					],
+					"src": "32:237:5"
+				},
+				"id": 5
+			},
+			"contracts/api3/contracts/whitelist/interfaces/IWhitelistRoles.sol": {
+				"ast": {
+					"absolutePath": "contracts/api3/contracts/whitelist/interfaces/IWhitelistRoles.sol",
+					"exportedSymbols": {
+						"IWhitelistRoles": [
+							218
+						]
+					},
+					"id": 219,
+					"license": "MIT",
+					"nodeType": "SourceUnit",
+					"nodes": [
+						{
+							"id": 202,
+							"literals": [
+								"solidity",
+								"^",
+								"0.8",
+								".0"
+							],
+							"nodeType": "PragmaDirective",
+							"src": "32:23:6"
+						},
+						{
+							"abstract": false,
+							"baseContracts": [],
+							"canonicalName": "IWhitelistRoles",
+							"contractDependencies": [],
+							"contractKind": "interface",
+							"fullyImplemented": false,
+							"id": 218,
+							"linearizedBaseContracts": [
+								218
+							],
+							"name": "IWhitelistRoles",
+							"nameLocation": "67:15:6",
+							"nodeType": "ContractDefinition",
+							"nodes": [
+								{
+									"functionSelector": "6db798f9",
+									"id": 207,
+									"implemented": false,
+									"kind": "function",
+									"modifiers": [],
+									"name": "WHITELIST_EXPIRATION_EXTENDER_ROLE_DESCRIPTION",
+									"nameLocation": "151:46:6",
+									"nodeType": "FunctionDefinition",
+									"parameters": {
+										"id": 203,
+										"nodeType": "ParameterList",
+										"parameters": [],
+										"src": "197:2:6"
+									},
+									"returnParameters": {
+										"id": 206,
+										"nodeType": "ParameterList",
+										"parameters": [
+											{
+												"constant": false,
+												"id": 205,
+												"mutability": "mutable",
+												"name": "",
+												"nameLocation": "-1:-1:-1",
+												"nodeType": "VariableDeclaration",
+												"scope": 207,
+												"src": "247:13:6",
+												"stateVariable": false,
+												"storageLocation": "memory",
+												"typeDescriptions": {
+													"typeIdentifier": "t_string_memory_ptr",
+													"typeString": "string"
+												},
+												"typeName": {
+													"id": 204,
+													"name": "string",
+													"nodeType": "ElementaryTypeName",
+													"src": "247:6:6",
+													"typeDescriptions": {
+														"typeIdentifier": "t_string_storage_ptr",
+														"typeString": "string"
+													}
+												},
+												"visibility": "internal"
+											}
+										],
+										"src": "246:15:6"
+									},
+									"scope": 218,
+									"src": "142:120:6",
+									"stateMutability": "view",
+									"virtual": false,
+									"visibility": "external"
+								},
+								{
+									"functionSelector": "6bd2bdd0",
+									"id": 212,
+									"implemented": false,
+									"kind": "function",
+									"modifiers": [],
+									"name": "WHITELIST_EXPIRATION_SETTER_ROLE_DESCRIPTION",
+									"nameLocation": "330:44:6",
+									"nodeType": "FunctionDefinition",
+									"parameters": {
+										"id": 208,
+										"nodeType": "ParameterList",
+										"parameters": [],
+										"src": "374:2:6"
+									},
+									"returnParameters": {
+										"id": 211,
+										"nodeType": "ParameterList",
+										"parameters": [
+											{
+												"constant": false,
+												"id": 210,
+												"mutability": "mutable",
+												"name": "",
+												"nameLocation": "-1:-1:-1",
+												"nodeType": "VariableDeclaration",
+												"scope": 212,
+												"src": "424:13:6",
+												"stateVariable": false,
+												"storageLocation": "memory",
+												"typeDescriptions": {
+													"typeIdentifier": "t_string_memory_ptr",
+													"typeString": "string"
+												},
+												"typeName": {
+													"id": 209,
+													"name": "string",
+													"nodeType": "ElementaryTypeName",
+													"src": "424:6:6",
+													"typeDescriptions": {
+														"typeIdentifier": "t_string_storage_ptr",
+														"typeString": "string"
+													}
+												},
+												"visibility": "internal"
+											}
+										],
+										"src": "423:15:6"
+									},
+									"scope": 218,
+									"src": "321:118:6",
+									"stateMutability": "view",
+									"virtual": false,
+									"visibility": "external"
+								},
+								{
+									"functionSelector": "d55a42dd",
+									"id": 217,
+									"implemented": false,
+									"kind": "function",
+									"modifiers": [],
+									"name": "INDEFINITE_WHITELISTER_ROLE_DESCRIPTION",
+									"nameLocation": "507:39:6",
+									"nodeType": "FunctionDefinition",
+									"parameters": {
+										"id": 213,
+										"nodeType": "ParameterList",
+										"parameters": [],
+										"src": "546:2:6"
+									},
+									"returnParameters": {
+										"id": 216,
+										"nodeType": "ParameterList",
+										"parameters": [
+											{
+												"constant": false,
+												"id": 215,
+												"mutability": "mutable",
+												"name": "",
+												"nameLocation": "-1:-1:-1",
+												"nodeType": "VariableDeclaration",
+												"scope": 217,
+												"src": "596:13:6",
+												"stateVariable": false,
+												"storageLocation": "memory",
+												"typeDescriptions": {
+													"typeIdentifier": "t_string_memory_ptr",
+													"typeString": "string"
+												},
+												"typeName": {
+													"id": 214,
+													"name": "string",
+													"nodeType": "ElementaryTypeName",
+													"src": "596:6:6",
+													"typeDescriptions": {
+														"typeIdentifier": "t_string_storage_ptr",
+														"typeString": "string"
+													}
+												},
+												"visibility": "internal"
+											}
+										],
+										"src": "595:15:6"
+									},
+									"scope": 218,
+									"src": "498:113:6",
+									"stateMutability": "view",
+									"virtual": false,
+									"visibility": "external"
+								}
+							],
+							"scope": 219,
+							"src": "57:556:6",
+							"usedErrors": [],
+							"usedEvents": []
+						}
+					],
+					"src": "32:582:6"
+				},
+				"id": 6
+			},
+			"contracts/api3/contracts/whitelist/interfaces/IWhitelistRolesWithManager.sol": {
+				"ast": {
+					"absolutePath": "contracts/api3/contracts/whitelist/interfaces/IWhitelistRolesWithManager.sol",
+					"exportedSymbols": {
+						"IAccessControlRegistryAdminned": [
+							10
+						],
+						"IAccessControlRegistryAdminnedWithManager": [
+							26
+						],
+						"IAccessControlRegistryUser": [
+							34
+						],
+						"IWhitelistRoles": [
+							218
+						],
+						"IWhitelistRolesWithManager": [
+							242
+						]
+					},
+					"id": 243,
+					"license": "MIT",
+					"nodeType": "SourceUnit",
+					"nodes": [
+						{
+							"id": 220,
+							"literals": [
+								"solidity",
+								"^",
+								"0.8",
+								".0"
+							],
+							"nodeType": "PragmaDirective",
+							"src": "32:23:7"
+						},
+						{
+							"absolutePath": "contracts/api3/contracts/whitelist/interfaces/IWhitelistRoles.sol",
+							"file": "./IWhitelistRoles.sol",
+							"id": 221,
+							"nameLocation": "-1:-1:-1",
+							"nodeType": "ImportDirective",
+							"scope": 243,
+							"sourceUnit": 219,
+							"src": "57:31:7",
+							"symbolAliases": [],
+							"unitAlias": ""
+						},
+						{
+							"absolutePath": "contracts/api3/contracts/access-control-registry/interfaces/IAccessControlRegistryAdminnedWithManager.sol",
+							"file": "../../access-control-registry/interfaces/IAccessControlRegistryAdminnedWithManager.sol",
+							"id": 222,
+							"nameLocation": "-1:-1:-1",
+							"nodeType": "ImportDirective",
+							"scope": 243,
+							"sourceUnit": 27,
+							"src": "89:96:7",
+							"symbolAliases": [],
+							"unitAlias": ""
+						},
+						{
+							"abstract": false,
+							"baseContracts": [
+								{
+									"baseName": {
+										"id": 223,
+										"name": "IWhitelistRoles",
+										"nameLocations": [
+											"231:15:7"
+										],
+										"nodeType": "IdentifierPath",
+										"referencedDeclaration": 218,
+										"src": "231:15:7"
+									},
+									"id": 224,
+									"nodeType": "InheritanceSpecifier",
+									"src": "231:15:7"
+								},
+								{
+									"baseName": {
+										"id": 225,
+										"name": "IAccessControlRegistryAdminnedWithManager",
+										"nameLocations": [
+											"252:41:7"
+										],
+										"nodeType": "IdentifierPath",
+										"referencedDeclaration": 26,
+										"src": "252:41:7"
+									},
+									"id": 226,
+									"nodeType": "InheritanceSpecifier",
+									"src": "252:41:7"
+								}
+							],
+							"canonicalName": "IWhitelistRolesWithManager",
+							"contractDependencies": [],
+							"contractKind": "interface",
+							"fullyImplemented": false,
+							"id": 242,
+							"linearizedBaseContracts": [
+								242,
+								26,
+								10,
+								34,
+								218
+							],
+							"name": "IWhitelistRolesWithManager",
+							"nameLocation": "197:26:7",
+							"nodeType": "ContractDefinition",
+							"nodes": [
+								{
+									"functionSelector": "7c706738",
+									"id": 231,
+									"implemented": false,
+									"kind": "function",
+									"modifiers": [],
+									"name": "whitelistExpirationExtenderRole",
+									"nameLocation": "309:31:7",
+									"nodeType": "FunctionDefinition",
+									"parameters": {
+										"id": 227,
+										"nodeType": "ParameterList",
+										"parameters": [],
+										"src": "340:2:7"
+									},
+									"returnParameters": {
+										"id": 230,
+										"nodeType": "ParameterList",
+										"parameters": [
+											{
+												"constant": false,
+												"id": 229,
+												"mutability": "mutable",
+												"name": "",
+												"nameLocation": "-1:-1:-1",
+												"nodeType": "VariableDeclaration",
+												"scope": 231,
+												"src": "366:7:7",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_bytes32",
+													"typeString": "bytes32"
+												},
+												"typeName": {
+													"id": 228,
+													"name": "bytes32",
+													"nodeType": "ElementaryTypeName",
+													"src": "366:7:7",
+													"typeDescriptions": {
+														"typeIdentifier": "t_bytes32",
+														"typeString": "bytes32"
+													}
+												},
+												"visibility": "internal"
+											}
+										],
+										"src": "365:9:7"
+									},
+									"scope": 242,
+									"src": "300:75:7",
+									"stateMutability": "view",
+									"virtual": false,
+									"visibility": "external"
+								},
+								{
+									"functionSelector": "8fe47dd8",
+									"id": 236,
+									"implemented": false,
+									"kind": "function",
+									"modifiers": [],
+									"name": "whitelistExpirationSetterRole",
+									"nameLocation": "390:29:7",
+									"nodeType": "FunctionDefinition",
+									"parameters": {
+										"id": 232,
+										"nodeType": "ParameterList",
+										"parameters": [],
+										"src": "419:2:7"
+									},
+									"returnParameters": {
+										"id": 235,
+										"nodeType": "ParameterList",
+										"parameters": [
+											{
+												"constant": false,
+												"id": 234,
+												"mutability": "mutable",
+												"name": "",
+												"nameLocation": "-1:-1:-1",
+												"nodeType": "VariableDeclaration",
+												"scope": 236,
+												"src": "445:7:7",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_bytes32",
+													"typeString": "bytes32"
+												},
+												"typeName": {
+													"id": 233,
+													"name": "bytes32",
+													"nodeType": "ElementaryTypeName",
+													"src": "445:7:7",
+													"typeDescriptions": {
+														"typeIdentifier": "t_bytes32",
+														"typeString": "bytes32"
+													}
+												},
+												"visibility": "internal"
+											}
+										],
+										"src": "444:9:7"
+									},
+									"scope": 242,
+									"src": "381:73:7",
+									"stateMutability": "view",
+									"virtual": false,
+									"visibility": "external"
+								},
+								{
+									"functionSelector": "e18de857",
+									"id": 241,
+									"implemented": false,
+									"kind": "function",
+									"modifiers": [],
+									"name": "indefiniteWhitelisterRole",
+									"nameLocation": "469:25:7",
+									"nodeType": "FunctionDefinition",
+									"parameters": {
+										"id": 237,
+										"nodeType": "ParameterList",
+										"parameters": [],
+										"src": "494:2:7"
+									},
+									"returnParameters": {
+										"id": 240,
+										"nodeType": "ParameterList",
+										"parameters": [
+											{
+												"constant": false,
+												"id": 239,
+												"mutability": "mutable",
+												"name": "",
+												"nameLocation": "-1:-1:-1",
+												"nodeType": "VariableDeclaration",
+												"scope": 241,
+												"src": "520:7:7",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_bytes32",
+													"typeString": "bytes32"
+												},
+												"typeName": {
+													"id": 238,
+													"name": "bytes32",
+													"nodeType": "ElementaryTypeName",
+													"src": "520:7:7",
+													"typeDescriptions": {
+														"typeIdentifier": "t_bytes32",
+														"typeString": "bytes32"
+													}
+												},
+												"visibility": "internal"
+											}
+										],
+										"src": "519:9:7"
+									},
+									"scope": 242,
+									"src": "460:69:7",
+									"stateMutability": "view",
+									"virtual": false,
+									"visibility": "external"
+								}
+							],
+							"scope": 243,
+							"src": "187:344:7",
+							"usedErrors": [],
+							"usedEvents": []
+						}
+					],
+					"src": "32:500:7"
+				},
+				"id": 7
+			}
+		}
+	}
+}

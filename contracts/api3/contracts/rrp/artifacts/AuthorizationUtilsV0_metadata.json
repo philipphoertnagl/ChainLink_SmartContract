@@ -1,0 +1,186 @@
+{
+	"compiler": {
+		"version": "0.8.28+commit.7893614a"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address[]",
+						"name": "authorizers",
+						"type": "address[]"
+					},
+					{
+						"internalType": "address",
+						"name": "airnode",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "requestId",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "endpointId",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "sponsor",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "requester",
+						"type": "address"
+					}
+				],
+				"name": "checkAuthorizationStatus",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "status",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address[]",
+						"name": "authorizers",
+						"type": "address[]"
+					},
+					{
+						"internalType": "address",
+						"name": "airnode",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes32[]",
+						"name": "requestIds",
+						"type": "bytes32[]"
+					},
+					{
+						"internalType": "bytes32[]",
+						"name": "endpointIds",
+						"type": "bytes32[]"
+					},
+					{
+						"internalType": "address[]",
+						"name": "sponsors",
+						"type": "address[]"
+					},
+					{
+						"internalType": "address[]",
+						"name": "requesters",
+						"type": "address[]"
+					}
+				],
+				"name": "checkAuthorizationStatuses",
+				"outputs": [
+					{
+						"internalType": "bool[]",
+						"name": "statuses",
+						"type": "bool[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {
+				"checkAuthorizationStatus(address[],address,bytes32,bytes32,address,address)": {
+					"details": "This method is meant to be called off-chain, statically by the Airnode to decide if it should respond to a request. The requester can also call it, yet this function returning true should not be taken as a guarantee of the subsequent request being fulfilled. It is enough for only one of the authorizer contracts to return true for the request to be authorized.",
+					"params": {
+						"airnode": "Airnode address",
+						"authorizers": "Authorizer contract addresses",
+						"endpointId": "Endpoint ID",
+						"requestId": "Request ID",
+						"requester": "Requester address",
+						"sponsor": "Sponsor address"
+					},
+					"returns": {
+						"status": "Authorization status of the request"
+					}
+				},
+				"checkAuthorizationStatuses(address[],address,bytes32[],bytes32[],address[],address[])": {
+					"params": {
+						"airnode": "Airnode address",
+						"authorizers": "Authorizer contract addresses",
+						"endpointIds": "Endpoint IDs",
+						"requestIds": "Request IDs",
+						"requesters": "Requester addresses",
+						"sponsors": "Sponsor addresses"
+					},
+					"returns": {
+						"statuses": "Authorization statuses of the request"
+					}
+				}
+			},
+			"title": "Contract that implements authorization checks",
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {
+				"checkAuthorizationStatus(address[],address,bytes32,bytes32,address,address)": {
+					"notice": "Uses the authorizer contracts of an Airnode to decide if a request is authorized. Once an Airnode receives a request, it calls this method to determine if it should respond. Similarly, third parties can use this method to determine if a particular request would be authorized."
+				},
+				"checkAuthorizationStatuses(address[],address,bytes32[],bytes32[],address[],address[])": {
+					"notice": "A convenience function to make multiple authorization status checks with a single call"
+				}
+			},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/api3/contracts/rrp/AuthorizationUtilsV0.sol": "AuthorizationUtilsV0"
+		},
+		"evmVersion": "cancun",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/api3/contracts/authorizers/interfaces/IAuthorizerV0.sol": {
+			"keccak256": "0xc20697f7891ba7d6fd684ed67583b715b275d2b3434dfcc8082310c1ebff6ac7",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://1cd1002bae8c0d06d1d60604da84c1755f0f2b1b0065cbc5b3f1529ea35ad1d7",
+				"dweb:/ipfs/QmQhqHRemRZSQcqqcNeS27WgyV7K3nR86Ty9ufPDHHZq23"
+			]
+		},
+		"contracts/api3/contracts/rrp/AuthorizationUtilsV0.sol": {
+			"keccak256": "0x10e1de9a7573caafc86c836f38db731feda3a9c9e33a7898e9d287cd05fce037",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://abe6519dff6b71fcae969f4020e267fc0714c9d40ebc2ec13090903f16303adc",
+				"dweb:/ipfs/QmYx6YAXCW7t96JoPwQf3y9iN2LXUNbf7uYgdhYWB6MLbJ"
+			]
+		},
+		"contracts/api3/contracts/rrp/interfaces/IAuthorizationUtilsV0.sol": {
+			"keccak256": "0x597a40e9911628f6bc1d845c9ebe7c345833e8814caa5ce02a8597d3b4ee7975",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://61c3e2fcf29d5cbc12b86ba82109675d1291def1e26e25982ad12859fe3d3a76",
+				"dweb:/ipfs/QmPtfN5tmTgzGCXyxBQktuWAkxVWsg7Q7F8FB6YJveaDJq"
+			]
+		}
+	},
+	"version": 1
+}

@@ -1,0 +1,48 @@
+{
+	"compiler": {
+		"version": "0.8.28+commit.7893614a"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [],
+		"devdoc": {
+			"details": "The interface of this contract is not implemented. It should be inherited and its functions should be exposed with a sort of an authorization scheme.",
+			"kind": "dev",
+			"methods": {},
+			"title": "Contract to be inherited by contracts that need temporary and permanent whitelists for services identified by hashes",
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"notice": "This contract implements two kinds of whitelisting:   (1) Temporary, ends when the expiration timestamp is in the past   (2) Indefinite, ends when the indefinite whitelist count is zero Multiple senders can indefinitely whitelist/unwhitelist independently. The user will be considered whitelisted as long as there is at least one active indefinite whitelisting.",
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/api3/contracts/whitelist/Whitelist.sol": "Whitelist"
+		},
+		"evmVersion": "cancun",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/api3/contracts/whitelist/Whitelist.sol": {
+			"keccak256": "0x22e3980c4144e2f57a115e51b05f1aeede12fe94fbeb538a287f02e9eff6be89",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://24f694a4e72992a4027736207e7962d780707246329ae94b76df9236ee2aa560",
+				"dweb:/ipfs/QmZVDuQH3A23S25QZ14C4AAPaGxcLYyxV7Q3oxn43UgXpF"
+			]
+		}
+	},
+	"version": 1
+}

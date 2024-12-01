@@ -1,0 +1,85 @@
+{
+	"compiler": {
+		"version": "0.8.28+commit.7893614a"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "requestId",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "airnode",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "endpointId",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "sponsor",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "requester",
+						"type": "address"
+					}
+				],
+				"name": "isAuthorizedV0",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/api3/contracts/authorizers/interfaces/IAuthorizerV0.sol": "IAuthorizerV0"
+		},
+		"evmVersion": "cancun",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/api3/contracts/authorizers/interfaces/IAuthorizerV0.sol": {
+			"keccak256": "0xc20697f7891ba7d6fd684ed67583b715b275d2b3434dfcc8082310c1ebff6ac7",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://1cd1002bae8c0d06d1d60604da84c1755f0f2b1b0065cbc5b3f1529ea35ad1d7",
+				"dweb:/ipfs/QmQhqHRemRZSQcqqcNeS27WgyV7K3nR86Ty9ufPDHHZq23"
+			]
+		}
+	},
+	"version": 1
+}

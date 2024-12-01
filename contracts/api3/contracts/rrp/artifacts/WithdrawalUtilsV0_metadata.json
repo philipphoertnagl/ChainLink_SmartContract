@@ -1,0 +1,217 @@
+{
+	"compiler": {
+		"version": "0.8.28+commit.7893614a"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "airnode",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "sponsor",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "bytes32",
+						"name": "withdrawalRequestId",
+						"type": "bytes32"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "sponsorWallet",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "FulfilledWithdrawal",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "airnode",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "sponsor",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "bytes32",
+						"name": "withdrawalRequestId",
+						"type": "bytes32"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "sponsorWallet",
+						"type": "address"
+					}
+				],
+				"name": "RequestedWithdrawal",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "withdrawalRequestId",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "airnode",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "sponsor",
+						"type": "address"
+					}
+				],
+				"name": "fulfillWithdrawal",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "airnode",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "sponsorWallet",
+						"type": "address"
+					}
+				],
+				"name": "requestWithdrawal",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "sponsorToWithdrawalRequestCount",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {
+				"fulfillWithdrawal(bytes32,address,address)": {
+					"details": "The Airnode sends the funds to the sponsor through this method to emit an event that indicates that the withdrawal request has been fulfilled",
+					"params": {
+						"airnode": "Airnode address",
+						"sponsor": "Sponsor address",
+						"withdrawalRequestId": "Withdrawal request ID"
+					}
+				},
+				"requestWithdrawal(address,address)": {
+					"details": "We do not need to use the withdrawal request parameters in the request ID hash to validate them at the node-side because all of the parameters are used during fulfillment and will get validated on-chain. The first withdrawal request a sponsor will make will cost slightly higher gas than the rest due to how the request counter is implemented.",
+					"params": {
+						"airnode": "Airnode address",
+						"sponsorWallet": "Sponsor wallet that the withdrawal is requested from"
+					}
+				}
+			},
+			"stateVariables": {
+				"sponsorToWithdrawalRequestCount": {
+					"details": "Can be used to calculate the ID of the next withdrawal request the sponsor will make"
+				},
+				"withdrawalRequestIdToParameters": {
+					"details": "Hash of expected fulfillment parameters are kept to verify that the fulfillment will be done with the correct parameters"
+				}
+			},
+			"title": "Contract that implements logic for withdrawals from sponsor wallets",
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {
+				"fulfillWithdrawal(bytes32,address,address)": {
+					"notice": "Called by the Airnode using the sponsor wallet to fulfill the withdrawal request made by the sponsor"
+				},
+				"requestWithdrawal(address,address)": {
+					"notice": "Called by a sponsor to create a request for the Airnode to send the funds kept in the respective sponsor wallet to the sponsor"
+				},
+				"sponsorToWithdrawalRequestCount(address)": {
+					"notice": "Called to get the withdrawal request count of the sponsor"
+				}
+			},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/api3/contracts/rrp/WithdrawalUtilsV0.sol": "WithdrawalUtilsV0"
+		},
+		"evmVersion": "cancun",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/api3/contracts/rrp/WithdrawalUtilsV0.sol": {
+			"keccak256": "0x7dc08ec4adb49ee6e9d93a891358cd4e145de29383fb00eb26128b1657a9357b",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://09418ad5ef2a8e166de043550471f16c1693bf1f34fc7c492cdf38f21f750b02",
+				"dweb:/ipfs/QmUCaus8UexVMYHpRZYeLDGphX9gZVtAS3pub5VBcNtckb"
+			]
+		},
+		"contracts/api3/contracts/rrp/interfaces/IWithdrawalUtilsV0.sol": {
+			"keccak256": "0x732a3a2447150d8a8097042719ca1faf35e06cbfec364d1d6b17aae254cfd520",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://4647ec4eb4c54e4d4a0af973e8804fdd5df0f6c5aa4d70bbeede40ea40bd672b",
+				"dweb:/ipfs/QmSgVM8e6tAvwtWd5Tx9rewsBTpJwFo4J3A2vvQDZZvC9B"
+			]
+		}
+	},
+	"version": 1
+}

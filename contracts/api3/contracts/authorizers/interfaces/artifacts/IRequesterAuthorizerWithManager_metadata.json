@@ -1,0 +1,640 @@
+{
+	"compiler": {
+		"version": "0.8.28+commit.7893614a"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "airnode",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "bytes32",
+						"name": "endpointId",
+						"type": "bytes32"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "requester",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "sender",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "expiration",
+						"type": "uint256"
+					}
+				],
+				"name": "ExtendedWhitelistExpiration",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "airnode",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "bytes32",
+						"name": "endpointId",
+						"type": "bytes32"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "requester",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "setter",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "sender",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint192",
+						"name": "indefiniteWhitelistCount",
+						"type": "uint192"
+					}
+				],
+				"name": "RevokedIndefiniteWhitelistStatus",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "airnode",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "bytes32",
+						"name": "endpointId",
+						"type": "bytes32"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "requester",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "sender",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "bool",
+						"name": "status",
+						"type": "bool"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint192",
+						"name": "indefiniteWhitelistCount",
+						"type": "uint192"
+					}
+				],
+				"name": "SetIndefiniteWhitelistStatus",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "airnode",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "bytes32",
+						"name": "endpointId",
+						"type": "bytes32"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "requester",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "sender",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "expiration",
+						"type": "uint256"
+					}
+				],
+				"name": "SetWhitelistExpiration",
+				"type": "event"
+			},
+			{
+				"inputs": [],
+				"name": "INDEFINITE_WHITELISTER_ROLE_DESCRIPTION",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "WHITELIST_EXPIRATION_EXTENDER_ROLE_DESCRIPTION",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "WHITELIST_EXPIRATION_SETTER_ROLE_DESCRIPTION",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "accessControlRegistry",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "adminRole",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "adminRoleDescription",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "airnode",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "endpointId",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "requester",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "setter",
+						"type": "address"
+					}
+				],
+				"name": "airnodeToEndpointIdToRequesterToSetterToIndefiniteWhitelistStatus",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "indefiniteWhitelistStatus",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "airnode",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "endpointId",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "requester",
+						"type": "address"
+					}
+				],
+				"name": "airnodeToEndpointIdToRequesterToWhitelistStatus",
+				"outputs": [
+					{
+						"internalType": "uint64",
+						"name": "expirationTimestamp",
+						"type": "uint64"
+					},
+					{
+						"internalType": "uint192",
+						"name": "indefiniteWhitelistCount",
+						"type": "uint192"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "airnode",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "endpointId",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "requester",
+						"type": "address"
+					},
+					{
+						"internalType": "uint64",
+						"name": "expirationTimestamp",
+						"type": "uint64"
+					}
+				],
+				"name": "extendWhitelistExpiration",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "indefiniteWhitelisterRole",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "airnode",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "endpointId",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "requester",
+						"type": "address"
+					}
+				],
+				"name": "isAuthorized",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "requestId",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "airnode",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "endpointId",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "sponsor",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "requester",
+						"type": "address"
+					}
+				],
+				"name": "isAuthorizedV0",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "manager",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "airnode",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "endpointId",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "requester",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "setter",
+						"type": "address"
+					}
+				],
+				"name": "revokeIndefiniteWhitelistStatus",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "airnode",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "endpointId",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "requester",
+						"type": "address"
+					},
+					{
+						"internalType": "bool",
+						"name": "status",
+						"type": "bool"
+					}
+				],
+				"name": "setIndefiniteWhitelistStatus",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "airnode",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "endpointId",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "requester",
+						"type": "address"
+					},
+					{
+						"internalType": "uint64",
+						"name": "expirationTimestamp",
+						"type": "uint64"
+					}
+				],
+				"name": "setWhitelistExpiration",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "whitelistExpirationExtenderRole",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "whitelistExpirationSetterRole",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/api3/contracts/authorizers/interfaces/IRequesterAuthorizerWithManager.sol": "IRequesterAuthorizerWithManager"
+		},
+		"evmVersion": "cancun",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/api3/contracts/access-control-registry/interfaces/IAccessControlRegistryAdminned.sol": {
+			"keccak256": "0x0f3ad45d6e1a4815cfaff171926ad5352d499a431b041b11adb316f4569bcce4",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://e42cc3177cb7af316d8bc8bf9d35a23c76561cc00ad15d8d2a79a27565c2f78e",
+				"dweb:/ipfs/QmUfTP9ZkKYmJYro5fJujV1YdLvcZAhgwRMsiXPV91EnYG"
+			]
+		},
+		"contracts/api3/contracts/access-control-registry/interfaces/IAccessControlRegistryAdminnedWithManager.sol": {
+			"keccak256": "0x8a8e1756fca81175305755b7a311536132e88173f60b2ac0fdeef92a6236afc5",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://154fe905383d7d4b47568ffbc900c5cba6e2d58b2a7baef036e8ce47f0cd7048",
+				"dweb:/ipfs/QmP9ovc77zXYX62SA27nj1QeG97yb6nDid8aRrsc7Mts6E"
+			]
+		},
+		"contracts/api3/contracts/access-control-registry/interfaces/IAccessControlRegistryUser.sol": {
+			"keccak256": "0xce1ceb04823a801ea173fe5140344645295768ff1b4d2ee2969c2f4b362102ca",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://506b04499e6b82dcc3287f7c1af874efda1a5b40b118bd0983fba25a219bc741",
+				"dweb:/ipfs/QmQd74L793o79P9gWhyJryRgNXuzcdjvgWFeamAHC83chY"
+			]
+		},
+		"contracts/api3/contracts/authorizers/interfaces/IAuthorizerV0.sol": {
+			"keccak256": "0xc20697f7891ba7d6fd684ed67583b715b275d2b3434dfcc8082310c1ebff6ac7",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://1cd1002bae8c0d06d1d60604da84c1755f0f2b1b0065cbc5b3f1529ea35ad1d7",
+				"dweb:/ipfs/QmQhqHRemRZSQcqqcNeS27WgyV7K3nR86Ty9ufPDHHZq23"
+			]
+		},
+		"contracts/api3/contracts/authorizers/interfaces/IRequesterAuthorizer.sol": {
+			"keccak256": "0x6ac3b9339efcff2c277448aba1307deb3216cf050d6073008fb1e5c6e5a453dc",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://3c3cf08b92aa4bd7adfdcc69dc2daae0ef536dc7c893575d60ba52dd16701518",
+				"dweb:/ipfs/QmQ3GEUo5r3zxkw9Yko1bY72ioNX49p1vUxV79p7T4Afxp"
+			]
+		},
+		"contracts/api3/contracts/authorizers/interfaces/IRequesterAuthorizerWithManager.sol": {
+			"keccak256": "0xac6f01746a411b9f9a4cce955fc764a217a12d9e75e542bc7b2826dbd9f47636",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://d13c9f77ebeaae40dd972a58b08e5e1b876de01fdd30088ea880bd1228fe6750",
+				"dweb:/ipfs/QmVke26K7VxmFWBjLsWhP8icFd9gQwVGrynTC5QHeGMEPE"
+			]
+		},
+		"contracts/api3/contracts/whitelist/interfaces/IWhitelistRoles.sol": {
+			"keccak256": "0x1143190e909f6aa779e99d143fdb26a91e42d269814a0d76152d31418db39fbf",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://601d7590f26650c5a2d4ba9788c48bb6c3d8c1a2fce0c0c5ffb23791b6c25713",
+				"dweb:/ipfs/QmTdcp84W9fHSYEuGCn21V7Xxmh2TMFurA1LDe44Wm2ZxQ"
+			]
+		},
+		"contracts/api3/contracts/whitelist/interfaces/IWhitelistRolesWithManager.sol": {
+			"keccak256": "0xe9c34f92e73b4231b96db8b57c86d4d1be2822b73de74a09b6f9d41b433a7310",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://0682fe6a33eb286625e4057a7a9b67e3ebd055605e7872fda1644d8aa672a63e",
+				"dweb:/ipfs/QmfJ5RHD8G7MvjS6h5Kkp4xRh9Uyy4LBcgq1ZapJJNw9Xo"
+			]
+		}
+	},
+	"version": 1
+}
