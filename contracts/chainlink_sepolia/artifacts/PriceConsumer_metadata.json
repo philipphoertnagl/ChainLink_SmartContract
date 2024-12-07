@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.9+commit.e5eed63a"
+		"version": "0.8.26+commit.8a97fa7a"
 	},
 	"language": "Solidity",
 	"output": {
@@ -37,9 +37,9 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"contracts/chainlink/PriceConsumer.sol": "PriceConsumer"
+			"contracts/chainlink_sepolia/PriceConsumer.sol": "PriceConsumer"
 		},
-		"evmVersion": "london",
+		"evmVersion": "cancun",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
@@ -59,7 +59,7 @@
 				"dweb:/ipfs/QmTa99QHrJBn3SXDizquPBUiTxVCNKQrHgaWJhuds5Sce2"
 			]
 		},
-		"contracts/chainlink/PriceConsumer.sol": {
+		"contracts/chainlink_sepolia/PriceConsumer.sol": {
 			"keccak256": "0x7eb6d1ceae6b7f6d951a416cc25e8029d2a1adb5bb37969245c21e4bc22f0a1b",
 			"license": "MIT",
 			"urls": [
