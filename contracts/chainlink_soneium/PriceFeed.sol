@@ -1,22 +1,19 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-// Import the Chainlink Aggregator interface
 import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 
 contract PriceConsumer {
     AggregatorV3Interface internal priceFeed;
 
-    // Constructor sets the address of the price feed (ETH/USD on Sepolia)
     constructor() {
-        priceFeed = AggregatorV3Interface(0xCA50964d2Cf6366456a607E5e1DBCE381A8BA807);
+        priceFeed = AggregatorV3Interface(0xCA50964d2Cf6366456a607E5e1DBCE381A8BA807); // ETH/USD
     }
 
-    // Function to fetch the latest price
     function getLatestPrice() public view returns (int) {
         (
             , 
-            int price, // latest price
+            int price, 
             , 
             , 
           

@@ -60,11 +60,11 @@
 			]
 		},
 		"contracts/chainlink_polygon/PriceFeedETH_USD.sol": {
-			"keccak256": "0x75fef8d59aab267e8f189fe6a3c31b631452b07f3c0356b4d7a5c188bf3304ec",
+			"keccak256": "0x067aafc15f480383151394a15130f89758a8468b785c17bb893a6874319a7a34",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://2461c7a55ed892b541442ac78c6992730748ac486b74f3a869c94804ada30ded",
-				"dweb:/ipfs/QmbUyMdW4R9Pn138j6NXGNeTUBESbFjGpYmc74sBVJ6bij"
+				"bzz-raw://b1efe76f2d59f9a9ba268deadd1d69af6a2538469839b1a0279c9905fddc5e68",
+				"dweb:/ipfs/QmTcJbiZP2Zf7hMmf2gPA6tkz1kQYQBg4qFP6F3xCWUXnZ"
 			]
 		}
 	},

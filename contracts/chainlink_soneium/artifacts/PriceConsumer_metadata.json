@@ -37,7 +37,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"contracts/chainlink_avalanche/PriceConsumer.sol": "PriceConsumer"
+			"contracts/chainlink_soneium/PriceFeed.sol": "PriceConsumer"
 		},
 		"evmVersion": "cancun",
 		"libraries": {},
@@ -59,12 +59,12 @@
 				"dweb:/ipfs/QmTa99QHrJBn3SXDizquPBUiTxVCNKQrHgaWJhuds5Sce2"
 			]
 		},
-		"contracts/chainlink_avalanche/PriceConsumer.sol": {
-			"keccak256": "0xa052e3ac268ec7a79fdb04b727fd6e769da32bc778b9e4b7ef9e0f06f2916f4c",
+		"contracts/chainlink_soneium/PriceFeed.sol": {
+			"keccak256": "0xa5790d2dccd9d582375af1d3673771205c70c87916ecc035fbbf249c3f9cdd60",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://b580bfaddf909d1361de0029887488c10c9a3fad9d23561d770283e15e78859d",
-				"dweb:/ipfs/QmWHjJTeNh2cs7MymvWrqCpo9WX4v14iKe5LNref6V7m4f"
+				"bzz-raw://2cbf2bd02e507075e3c84755a95f92364669054e527260e7b4cefe9aeb7826ec",
+				"dweb:/ipfs/QmSyNCBY1YX1Q6LH3kHroB81MVg6Zu92UnyNdhHEMLNQj1"
 			]
 		}
 	},

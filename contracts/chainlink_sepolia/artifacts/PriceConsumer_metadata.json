@@ -60,11 +60,11 @@
 			]
 		},
 		"contracts/chainlink_sepolia/PriceConsumer.sol": {
-			"keccak256": "0x7eb6d1ceae6b7f6d951a416cc25e8029d2a1adb5bb37969245c21e4bc22f0a1b",
+			"keccak256": "0x6aa5d896c47b4de5a597e78e053c758ea1e8cc6635d44891452bd34beb028cee",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://5370a6bdd774c4efe5b56d51a8d6589f3488add02ba2a308a30c13f81fccddb0",
-				"dweb:/ipfs/QmdGSr1tLZgQ4HeqpeVxNp9J86Upeb18tMS84mwWwCyoap"
+				"bzz-raw://e03ba18f76dcd49621aa3a5acf8dd7163a140683d2f7071c9f4df122dda84483",
+				"dweb:/ipfs/QmX61ZcL6eETFgFc9xT9K2QWYwjJMQscMaNkctHcsP93xH"
 			]
 		}
 	},
