@@ -1,0 +1,178 @@
+{
+	"compiler": {
+		"version": "0.8.26+commit.8a97fa7a"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "dataSize",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "gasUsed",
+						"type": "uint256"
+					}
+				],
+				"name": "DataStored",
+				"type": "event"
+			},
+			{
+				"inputs": [],
+				"name": "dataCounter",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_id",
+						"type": "uint256"
+					}
+				],
+				"name": "retrieveData",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes",
+						"name": "_data",
+						"type": "bytes"
+					}
+				],
+				"name": "storeData",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "storedData",
+				"outputs": [
+					{
+						"internalType": "bytes",
+						"name": "data",
+						"type": "bytes"
+					},
+					{
+						"internalType": "uint256",
+						"name": "timestamp",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "gasUsed",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {
+				"retrieveData(uint256)": {
+					"params": {
+						"_id": "The ID of the stored data."
+					},
+					"returns": {
+						"_0": "The stored data, timestamp, and gas used."
+					}
+				},
+				"storeData(bytes)": {
+					"params": {
+						"_data": "The data to store (small, medium, large)."
+					}
+				}
+			},
+			"title": "Storage Efficiency Benchmarking Contract",
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {
+				"retrieveData(uint256)": {
+					"notice": "Retrieves stored data (costs gas but does not modify blockchain)."
+				},
+				"storeData(bytes)": {
+					"notice": "Stores data and tracks gas cost."
+				}
+			},
+			"notice": "Measures gas costs for storing and retrieving different data sizes.",
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/LLM_Tries/StorageBenchmark.sol": "StorageBenchmark"
+		},
+		"evmVersion": "cancun",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/LLM_Tries/StorageBenchmark.sol": {
+			"keccak256": "0x5a31d679d3cb7dfa5960ca77c1135b585a8f4211e343c39fd1c482d4ce8ec219",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://6d95889893ad645e9b5168c2d8f12cadceaec36a5529fcc000ab31ba7288ca70",
+				"dweb:/ipfs/QmXg78kLshj6FqjKZ2ggLzTYgXz61Nx5TiZtNwDsZxxngc"
+			]
+		}
+	},
+	"version": 1
+}

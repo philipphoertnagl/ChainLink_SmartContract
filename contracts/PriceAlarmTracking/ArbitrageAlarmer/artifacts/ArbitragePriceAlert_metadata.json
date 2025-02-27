@@ -1,0 +1,275 @@
+{
+	"compiler": {
+		"version": "0.8.26+commit.8a97fa7a"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "asset",
+						"type": "string"
+					},
+					{
+						"indexed": false,
+						"internalType": "int256",
+						"name": "minPrice",
+						"type": "int256"
+					},
+					{
+						"indexed": false,
+						"internalType": "int256",
+						"name": "maxPrice",
+						"type": "int256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "timestamp",
+						"type": "uint256"
+					}
+				],
+				"name": "ArbitrageOpportunityDetected",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "asset",
+						"type": "string"
+					}
+				],
+				"name": "AssetAdded",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "asset",
+						"type": "string"
+					}
+				],
+				"name": "PriceFeedsUpdated",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"internalType": "address[]",
+						"name": "_priceFeeds",
+						"type": "address[]"
+					},
+					{
+						"internalType": "int256",
+						"name": "_arbitrageThreshold",
+						"type": "int256"
+					}
+				],
+				"name": "addAsset",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"name": "assets",
+				"outputs": [
+					{
+						"internalType": "int256",
+						"name": "arbitrageThreshold",
+						"type": "int256"
+					},
+					{
+						"internalType": "bool",
+						"name": "arbitrageOpportunityDetected",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					}
+				],
+				"name": "checkArbitrage",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					}
+				],
+				"name": "getLatestPrices",
+				"outputs": [
+					{
+						"internalType": "int256[]",
+						"name": "",
+						"type": "int256[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"internalType": "int256",
+						"name": "_newThreshold",
+						"type": "int256"
+					}
+				],
+				"name": "updateArbitrageThreshold",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"internalType": "address[]",
+						"name": "_priceFeeds",
+						"type": "address[]"
+					}
+				],
+				"name": "updatePriceFeeds",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {
+				"addAsset(string,address[],int256)": {
+					"params": {
+						"_arbitrageThreshold": "The minimum difference between the highest and lowest price to trigger an alert.",
+						"_priceFeeds": "An array of Chainlink price feed addresses.",
+						"name": "The name of the asset."
+					}
+				},
+				"checkArbitrage(string)": {
+					"params": {
+						"name": "The name of the asset."
+					}
+				},
+				"getLatestPrices(string)": {
+					"params": {
+						"name": "The name of the asset."
+					},
+					"returns": {
+						"_0": "An array of latest prices from the respective price feeds."
+					}
+				},
+				"updateArbitrageThreshold(string,int256)": {
+					"params": {
+						"_newThreshold": "The new arbitrage threshold.",
+						"name": "The name of the asset."
+					}
+				},
+				"updatePriceFeeds(string,address[])": {
+					"params": {
+						"_priceFeeds": "An updated array of Chainlink price feed addresses.",
+						"name": "The name of the asset."
+					}
+				}
+			},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {
+				"addAsset(string,address[],int256)": {
+					"notice": "Registers a new asset with multiple price feeds and an arbitrage threshold."
+				},
+				"checkArbitrage(string)": {
+					"notice": "Checks for arbitrage opportunities by comparing the latest prices from all feeds. If the difference between the maximum and minimum price is above the threshold, an event is emitted."
+				},
+				"getLatestPrices(string)": {
+					"notice": "Returns the latest prices from all feeds for a given asset."
+				},
+				"updateArbitrageThreshold(string,int256)": {
+					"notice": "Updates the arbitrage threshold for an asset."
+				},
+				"updatePriceFeeds(string,address[])": {
+					"notice": "Updates the list of price feeds for a given asset."
+				}
+			},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/PriceAlarmTracking/ArbitrageAlarmer/MultipleAssetArbitrageAlarm.sol": "ArbitragePriceAlert"
+		},
+		"evmVersion": "cancun",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol": {
+			"keccak256": "0xfe4e8bb4861bb3860ba890ab91a3b818ec66e5a8f544fb608cfcb73f433472cd",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://644cff84052e1e82b5bb502b2a46e8f142a62b0db4cd9b38200798ba8373c6f7",
+				"dweb:/ipfs/QmTa99QHrJBn3SXDizquPBUiTxVCNKQrHgaWJhuds5Sce2"
+			]
+		},
+		"contracts/PriceAlarmTracking/ArbitrageAlarmer/MultipleAssetArbitrageAlarm.sol": {
+			"keccak256": "0xec0a5900ea42f0e82ecd23c2245757c2f83385cf83acd603edf0c03498f539d2",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://8ebbbd8dd53adb21191c8eb8b16df7c62e7e1a7947dc9634edca3fb6e97f2ff7",
+				"dweb:/ipfs/QmeqwoMhJTKrbRLZF6bY5YQb9hPNpGi8NTiVPNT5MfBfmJ"
+			]
+		}
+	},
+	"version": 1
+}
