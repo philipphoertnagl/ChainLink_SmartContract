@@ -1,0 +1,79 @@
+{
+	"compiler": {
+		"version": "0.8.26+commit.8a97fa7a"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "newCounter",
+						"type": "uint256"
+					}
+				],
+				"name": "Incremented",
+				"type": "event"
+			},
+			{
+				"inputs": [],
+				"name": "counter",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "increment",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/SC_Collection/HighThroughputCounter.sol": "HighThroughputCounter"
+		},
+		"evmVersion": "cancun",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/SC_Collection/HighThroughputCounter.sol": {
+			"keccak256": "0x0153d6c9a60a9a5ebc0331673b5e240b5c7b14e36073ebe0ed2b4d62e3d5306c",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://2dd9c39457f65dc18ab7f462036e81ff0eb2c356deb99c5ef7b7a12668200d69",
+				"dweb:/ipfs/Qme4Bb45jHns7pU5C5ZYDnh1vX9GgJkDRVoiYnc3bW7vvy"
+			]
+		}
+	},
+	"version": 1
+}

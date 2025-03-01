@@ -84,14 +84,7 @@
 		],
 		"devdoc": {
 			"kind": "dev",
-			"methods": {
-				"getLatestPrice()": {
-					"details": "Return the current Chainlink aggregator price on demand (without storing it)."
-				},
-				"updatePrice()": {
-					"details": "Manually fetch the latest price from the aggregator and store it.      In typical usage, you'd call this function periodically (or from a script)."
-				}
-			},
+			"methods": {},
 			"version": 1
 		},
 		"userdoc": {
@@ -125,11 +118,11 @@
 			]
 		},
 		"contracts/SC_Collection/SimplePriceFeed.sol": {
-			"keccak256": "0x198be5973150911251552119479663aea2de14e9de71408bad3f5153304511c8",
+			"keccak256": "0xec2e0db1f49cc95ca5847a900f4f32b2bb8a345c31951d5946b42dbe64a736ce",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://0babf6b58012750f061a1f4edb2f1b52040546fafe91182b976baabb9ce11ca6",
-				"dweb:/ipfs/QmbCTq4PjWJDkx685mrk6Lh39Y9JxegPcGtUVke1aJLqwK"
+				"bzz-raw://981e3f289e44d144143b1279d365204cab56c6de088a193031ab9233e795e2d8",
+				"dweb:/ipfs/QmamMxXfyW6NSpNANHUEDvWM9HMNiNL5bY6U7hzhx64Sue"
 			]
 		}
 	},

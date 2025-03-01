@@ -16,10 +16,7 @@ contract SimplePriceFeed {
         priceFeed = AggregatorV3Interface(_priceFeedAddress);
     }
 
-    /**
-     * @dev Manually fetch the latest price from the aggregator and store it.
-     *      In typical usage, you'd call this function periodically (or from a script).
-     */
+    //periodically called
     function updatePrice() public {
         (
             uint80 roundID,
@@ -37,9 +34,6 @@ contract SimplePriceFeed {
         emit PriceUpdated(price, updatedAt);
     }
 
-    /**
-     * @dev Return the current Chainlink aggregator price on demand (without storing it).
-     */
     function getLatestPrice() external view returns (int256) {
         (
             ,

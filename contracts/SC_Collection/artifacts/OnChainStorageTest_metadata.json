@@ -125,17 +125,7 @@
 		],
 		"devdoc": {
 			"kind": "dev",
-			"methods": {
-				"storeLargeData(string)": {
-					"details": "Stores a string in `largeData`, and emits it in an event."
-				},
-				"storeMediumData(string)": {
-					"details": "Stores a string in `mediumData`, and emits it in an event."
-				},
-				"storeShortData(string)": {
-					"details": "Stores a string in `shortData`, and emits it in an event.      You can pass a short or long string;       \"short\" is just a label for easy reference."
-				}
-			},
+			"methods": {},
 			"version": 1
 		},
 		"userdoc": {
@@ -161,11 +151,11 @@
 	},
 	"sources": {
 		"contracts/SC_Collection/OnChainStringTest.sol": {
-			"keccak256": "0x77da0a7e50b82637b0909904f11b9c02b426a618f2fb332e655d7fc88beba73f",
+			"keccak256": "0x15bfff0d5c970e8f5b238bcb5f8befba2547ce1e3cc948a048e90a70ca5dc93e",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://a340175cf38247d7ee07e1bf476045d33e4f643e53ef19b41bd3f8beda1e68dd",
-				"dweb:/ipfs/QmU4yqjZwF5yhhEZLgPrpANk3HkzFxbAqWauR1MMd3Ncti"
+				"bzz-raw://eb798a0672bb49af4267893699dfaa2367f0ecbce724bde1144aef010988090a",
+				"dweb:/ipfs/QmTgHtvwR67f5XHaV5jRgN3LRBtwg9E2iCgLoiScVT3iL9"
 			]
 		}
 	},
